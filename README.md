@@ -5,19 +5,19 @@
 ### [사용자 등록](https://github.com/OUS-KR/ESFJ.KR/issues/new?template=01-user-register-by-issue.yml)
 
 - `ESFJ.KR/u/{사용자 아이디}` 주소 기반의 사용자 등록
-  - 사용자 예제: [ESFJ.KR/u/esfj](https://esfj.kr/u/esfj)
+  - 사용자 예제: [ESFJ.KR/u/esfj](https://esfj.kr/u/esfj) ([ESFJ.KR/@esfj](https://esfj.kr/@esfj))
   - 사용자 등록 예제: https://github.com/OUS-KR/ESFJ.KR/issues/1
 
 ### [사용자 단축주소 생성](https://github.com/OUS-KR/ESFJ.KR/issues/new?template=02-user-short-url-register-by-issue.yml)
 
 - `ESFJ.KR/u/{사용자 아이디}/{단축 경로}` 형태의 단축주소 생성
-  - 사용자 단축주소 예제: [ESFJ.KR/u/esfj/links/esfj-kr](https://esfj.kr/u/esfj/links/esfj-kr)
+  - 사용자 단축주소 예제: [ESFJ.KR/u/esfj/links/esfj-kr](https://esfj.kr/u/esfj/links/esfj-kr) ([ESFJ.KR/@esfj/links/esfj-kr](https://esfj.kr/@esfj/links/esfj-kr))
   - 사용자 단축주소 등록 예제: https://github.com/OUS-KR/ESFJ.KR/issues/2
 
 ### [사용자 글 작성](https://github.com/OUS-KR/ESFJ.KR/issues/new?template=03-user-article-writing-by-issue.yml)
 
 - `ESFJ.KR/u/{사용자 아이디}/{글 경로}` 형태의 글 작성
-  - 사용자 글 예제: [ESFJ.KR/u/esfj/articles/example](https://esfj.kr/u/esfj/articles/example)
+  - 사용자 글 예제: [ESFJ.KR/u/esfj/articles/example](https://esfj.kr/u/esfj/articles/example) ([ESFJ.KR/@esfj/articles/example](https://esfj.kr/@esfj/articles/example))
   - 사용자 글 작성 예제: https://github.com/OUS-KR/ESFJ.KR/issues/3
  
 ### [사용자 메뉴 설정](https://github.com/OUS-KR/ESFJ.KR/issues/new?template=04-user-menu-setting-by-issue.yml)
