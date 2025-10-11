@@ -16,5 +16,16 @@
         "description": "오늘의 추천 게임"
       }
     ]
+  },
+  {
+    "mainTitle": "정보",
+    "items": [
+      {
+        "title": "ESFJ 특징 분석: 사교적인 외교관",
+        "url": "/u/tests/info-characteristics/",
+        "type": "정보",
+        "description": "ESFJ의 핵심 특징, 장단점, 성장 방법"
+      }
+    ]
   }
 ]
