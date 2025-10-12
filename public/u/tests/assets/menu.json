@@ -68,5 +68,117 @@
         "description": "미루는 습관을 이기는 법"
       }
     ]
+  },
+  {
+    "mainTitle": "테스트",
+    "items": [
+      {
+        "title": "ESFJ 사교 행사 기획 테스트",
+        "url": "/u/tests/test-social-event-planning/",
+        "type": "테스트",
+        "description": "ESFJ의 뛰어난 조직력과 타인을 배려하는 마음을 바탕으로 성공적인 사교 행사를 기획하는 능력을 측정합니다."
+      },
+      {
+        "title": "ESFJ 연애 스타일 테스트",
+        "url": "/u/tests/test-relationship-style/",
+        "type": "테스트",
+        "description": "ESFJ의 연애 스타일 알아보기"
+      },
+      {
+        "title": "ESFJ 스트레스 원인 테스트",
+        "url": "/u/tests/test-stress-triggers/",
+        "type": "테스트",
+        "description": "스트레스 원인 진단 테스트"
+      },
+      {
+        "title": "ESFJ 전통 가치관 테스트",
+        "url": "/u/tests/test-traditional-values/",
+        "type": "테스트",
+        "description": "ESFJ가 사회적 규범, 전통, 그리고 기존의 질서를 얼마나 중요하게 생각하는지 측정합니다."
+      },
+      {
+        "title": "ESFJ 빙고 챌린지",
+        "url": "/u/tests/test-bingo/",
+        "type": "테스트",
+        "description": "ESFJ 특징으로 구성된 빙고 게임"
+      },
+      {
+        "title": "ESFJ 실용적 조언 능력 테스트",
+        "url": "/u/tests/test-practical-advice/",
+        "type": "테스트",
+        "description": "타인의 문제에 대해 감정적 위로를 넘어 구체적이고 실용적인 해결책을 제시하는 ESFJ의 성향을 측정합니다."
+      },
+      {
+        "title": "ESFJ 공동체 기여도 테스트",
+        "url": "/u/tests/test-community-contribution/",
+        "type": "테스트",
+        "description": "ESFJ의 공동체에 대한 헌신과 기여 의지를 측정합니다."
+      }
+    ]
+  },
+  {
+    "mainTitle": "게임",
+    "items": [
+      {
+        "title": "커뮤니티 건설",
+        "url": "/u/tests/game-community-builder/",
+        "type": "게임",
+        "description": "주민들의 행복을 최우선으로 하여, 갈등을 해결하고 필요를 충족시키며 이상적인 마을을 건설하는 시뮬레이션 게임입니다."
+      },
+      {
+        "title": "팀 챌린지",
+        "url": "/u/tests/game-team-challenge/",
+        "type": "게임",
+        "description": "팀의 화합을 이끌고 동기를 부여하는 조력자 역할을 맡아, 팀원들과 협력하여 공동의 목표를 달성하는 게임입니다."
+      },
+      {
+        "title": "이벤트 플래너",
+        "url": "/u/tests/game-event-planner/",
+        "type": "게임",
+        "description": "결혼식, 축제 등 대규모 행사를 기획하고, 예산, 인력, 돌발 상황 등을 관리하여 참가자 모두를 만족시키는 전략 게임입니다."
+      },
+      {
+        "title": "돌봄 시뮬레이션",
+        "url": "/u/tests/game-caregiver-simulation/",
+        "type": "게임",
+        "description": "아기, 환자, 동물 등 가상의 대상을 선택하여, 필요와 감정을 세심하게 파악하고 보살피며 성장시키는 게임입니다."
+      },
+      {
+        "title": "가정 관리 시뮬레이션",
+        "url": "/u/tests/game-home-management/",
+        "type": "게임",
+        "description": "청소, 요리, 예산 관리 등 다양한 일상 업무를 효율적으로 처리하여 안정적이고 깔끔한 가정을 유지하는 시뮬레이션 게임입니다."
+      },
+      {
+        "title": "학교 동아리 회장",
+        "url": "/u/tests/game-school-club-president/",
+        "type": "게임",
+        "description": "동아리 회장이 되어 신입 부원을 모집하고, 즐거운 행사를 기획하며, 구성원 모두가 만족하는 인기 동아리로 만드는 운영 시뮬레이션 게임입니다."
+      },
+      {
+        "title": "전통 축제 주최자",
+        "url": "/u/tests/game-traditional-festival-host/",
+        "type": "게임",
+        "description": "지역의 전통 축제를 담당하여, 관습을 존중하고 여러 세대가 함께 즐길 수 있는 성공적인 축제를 만들어내는 기획 게임입니다."
+      },
+      {
+        "title": "고객 서비스의 달인",
+        "url": "/u/tests/game-customer-service-hero/",
+        "type": "게임",
+        "description": "서비스 센터의 매니저가 되어 까다로운 고객의 불만을 경청하고 공감하며, 문제를 해결하여 최고의 고객 만족도를 달성하는 시뮬레이션 게임입니다."
+      },
+      {
+        "title": "음악 기억력 게임",
+        "url": "/u/tests/game-music-memory/",
+        "type": "게임",
+        "description": "음악 기억력 게임"
+      },
+      {
+        "title": "리듬 마스터 게임",
+        "url": "/u/tests/game-rhythm-master/",
+        "type": "게임",
+        "description": "리듬 마스터 게임"
+      }
+    ]
   }
 ]
