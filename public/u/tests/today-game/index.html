@@ -162,28 +162,25 @@
         gameInProgress = true;
     }
 
-    // Game 1: Remember the Detail
-    function setupRememberTheDetailGame() {
-        document.getElementById('gameTitle').innerText = "오늘의 게임: 디테일 기억하기";
+    // Game 1: Community Problem Solving Quiz
+    function setupCommunityProblemSolvingQuiz() {
+        document.getElementById('gameTitle').innerText = "오늘의 게임: 공동체 문제 해결 퀴즈";
         const gameArea = document.getElementById('gameArea');
-        const details = [
-            { img: "https://via.placeholder.com/300x200/FFC0CB/000000?text=Room+A", q: "방에 있던 액자의 색깔은 무엇이었나요?", a: ["분홍색", "파란색", "노란색"], correct: 0 },
-            { img: "https://via.placeholder.com/300x200/ADD8E6/000000?text=Profile+B", q: "프로필 사진 속 인물의 셔츠 색깔은 무엇이었나요?", a: ["검은색", "하늘색", "흰색"], correct: 1 }
+        const scenarios = [
+            { q: "우리 동네 놀이터가 낡아서 아이들이 다칠 위험이 있습니다. 어떻게 하시겠습니까?", a: ["주민들과 함께 모금 활동을 시작한다.", "구청에 민원을 제기한다.", "아이들에게 다른 놀이터를 이용하라고 한다."], correct: 0 },
+            { q: "이웃 어르신이 혼자 지내시며 어려움을 겪고 계십니다. 어떻게 도움을 드릴까요?", a: ["정기적으로 방문하여 말벗이 되어 드린다.", "사회복지기관에 연락하여 도움을 요청한다.", "필요한 물품을 대신 구매해 드린다."], correct: 0 },
+            { q: "아파트 단지 내 쓰레기 무단 투기가 심각합니다. 어떻게 해결하시겠습니까?", a: ["주민들과 함께 캠페인을 벌여 의식을 개선한다.", "관리사무소에 CCTV 설치를 요청한다.", "무단 투기하는 사람을 직접 찾아가 경고한다."], correct: 0 }
         ];
-        const detail = details[Math.floor(currentRandFn() * details.length)];
-        currentCorrectAnswer = detail.correct;
-        gameArea.innerHTML = `<div class="game-display"><img src="${detail.img}" alt="Detail Image"></div><p>이미지를 5초간 보여줍니다!</p>`;
+        const scenario = scenarios[Math.floor(currentRandFn() * scenarios.length)];
+        currentCorrectAnswer = scenario.correct;
+        gameArea.innerHTML = `
+            <div class="game-display question">${scenario.q}</div>
+            <div class="choices">
+                ${scenario.a.map((choice, index) => `<button class="choice-btn" data-index="${index}">${choice}</button>`).join('')}
+            </div>
+        `;
         document.getElementById('game-input-area').innerHTML = '';
         gameInProgress = true;
-
-        setTimeout(() => {
-            gameArea.innerHTML = `
-                <div class="game-display question">${detail.q}</div>
-                <div class="choices">
-                    ${detail.a.map((choice, index) => `<button class="choice-btn" data-index="${index}">${choice}</button>`).join('')}
-                </div>
-            `;
-        }, 5000);
     }
 
     // Game 2: Gift Giver
@@ -229,7 +226,7 @@
     // --- Game Dispatcher and Common Logic ---
     const gameTypes = [
         setupSocialHarmonyQuiz,
-        setupRememberTheDetailGame,
+        setupCommunityProblemSolvingQuiz,
         setupGiftGiverGame,
         setupPartyPlannerGame
     ];
