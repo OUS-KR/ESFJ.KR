@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESFJ — esfj.kr</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet" />
+  <style type="text/tailwindcss">
+    @theme {
+      --color-rose-50:#fff5f6;
+      --color-rose-100:#ffe0e3;
+      --color-rose-200:#ffc2c8;
+      --color-rose-300:#ff9aa5;
+      --color-rose-400:#f7717f;
+      --color-rose-500:#e84d5d;
+      --color-rose-600:#c92d3e;
+      --color-rose-700:#a0182a;
+      --color-rose-800:#720d1c;
+      --color-rose-900:#440610;
+      --color-rose-950:#200208;
+      --color-gold-100:#fff8e1;
+      --color-gold-200:#fdedb8;
+      --color-gold-300:#fad980;
+      --color-gold-400:#f5be42;
+      --color-gold-500:#e0a020;
+      --color-gold-600:#b87c0c;
+      --color-sage-100:#eef4ef;
+      --color-sage-200:#cfe0d0;
+      --color-sage-300:#a8c8ab;
+      --color-sage-400:#7aaa7e;
+      --color-sage-500:#508a55;
+      --color-sage-600:#366b3b;
+      --color-dust-200:#d6e4f0;
+      --color-dust-300:#afc8e0;
+      --color-dust-400:#7aa8cc;
+      --color-dust-500:#4a82aa;
+      --color-cream-50:#fffdf8;
+      --color-cream-100:#fdf6e8;
+      --color-cream-200:#f7e8c8;
+      --color-cream-800:#4a3820;
+      --color-cream-900:#2e2010;
+      --color-cream-950:#180e06;
+      --font-display:"Playfair Display",Georgia,serif;
+      --font-script:"Great Vibes",cursive;
+      --font-body:"Nunito",system-ui,sans-serif;
+    }
+
+    @layer base {
+      *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+      html{background:#180e06;color:#f7e8c8;font-family:var(--font-body);scroll-behavior:smooth;overflow-x:hidden;}
+      body{min-height:100vh;position:relative;}
+      ::selection{background:rgba(232,77,93,.35);color:#fff;}
+      ::-webkit-scrollbar{width:4px;}
+      ::-webkit-scrollbar-track{background:#2e2010;}
+      ::-webkit-scrollbar-thumb{background:#e84d5d;border-radius:2px;}
+    }
+
+    /* ── Canvas & Overlays ── */
+    #bloom-canvas{
+      position:fixed;inset:0;z-index:0;pointer-events:none;
+    }
+    .warm-glow{
+      position:fixed;inset:0;z-index:1;pointer-events:none;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 30%,rgba(248,113,127,.06) 0%,transparent 70%),
+        radial-gradient(ellipse 50% 60% at 80% 70%,rgba(245,190,66,.05) 0%,transparent 70%);
+      animation:glow-drift 12s ease-in-out infinite alternate;
+    }
+    @keyframes glow-drift{
+      0%{transform:translate(0,0);}
+      100%{transform:translate(12px,8px);}
+    }
+    .vignette{
+      position:fixed;inset:0;z-index:2;pointer-events:none;
+      background:radial-gradient(ellipse at 50% 50%,transparent 38%,rgba(24,14,6,.88) 100%);
+    }
+
+    /* ── Site Wrapper ── */
+    .site-wrapper{
+      position:relative;z-index:10;
+      display:grid;grid-template-rows:auto 1fr auto;min-height:100vh;
+    }
+
+    /* ── Header ── */
+    .glass-header{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:blur(24px) saturate(1.6);
+      background:rgba(24,14,6,.76);
+      border-bottom:1px solid rgba(232,77,93,.16);
+    }
+    .logo-esfj{
+      font-family:var(--font-display);
+      font-size:1.5rem;font-weight:700;letter-spacing:.1em;
+      color:#ff9aa5;text-decoration:none;
+      text-shadow:0 0 22px rgba(232,77,93,.55);
+      transition:color .2s;
+    }
+    .logo-esfj:hover{color:#fff;}
+    .nav-link{
+      font-family:var(--font-body);font-size:.78rem;font-weight:600;
+      letter-spacing:.1em;color:#c2787f;
+      text-decoration:none;transition:color .2s;
+    }
+    .nav-link:hover{color:#ff9aa5;}
+    .domain-badge{
+      font-family:var(--font-body);font-size:.68rem;font-weight:600;
+      letter-spacing:.1em;color:rgba(255,154,165,.75);
+      border:1px solid rgba(232,77,93,.3);
+      padding:.25rem .85rem;border-radius:999px;
+      background:rgba(232,77,93,.1);
+    }
+
+    /* ── Hero ── */
+    .hero-section{
+      position:relative;min-height:100vh;
+      display:flex;align-items:center;justify-content:center;
+      padding:8rem 1.5rem 6rem;overflow:hidden;
+    }
+    .hero-bg-text{
+      position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+      font-family:var(--font-display);font-size:clamp(9rem,22vw,20rem);
+      font-weight:700;letter-spacing:-.01em;
+      color:transparent;
+      -webkit-text-stroke:1px rgba(232,77,93,.08);
+      user-select:none;pointer-events:none;
+      animation:breathe 9s ease-in-out infinite;
+    }
+    @keyframes breathe{0%,100%{opacity:.35;transform:scale(1);}50%{opacity:.65;transform:scale(1.012);}}
+
+    /* Floral ring */
+    .floral-ring{
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      width:min(540px,78vw);height:min(540px,78vw);
+      border:1px solid rgba(232,77,93,.1);border-radius:50%;
+      pointer-events:none;
+      animation:spin-slow 40s linear infinite;
+    }
+    .floral-ring::before{
+      content:'';position:absolute;inset:28px;
+      border:1px dashed rgba(245,190,66,.07);border-radius:50%;
+    }
+    .floral-ring::after{
+      content:'';position:absolute;inset:64px;
+      border:1px solid rgba(122,170,126,.06);border-radius:50%;
+    }
+    @keyframes spin-slow{to{transform:translate(-50%,-50%) rotate(360deg);}}
+
+    .hero-content{position:relative;z-index:2;text-align:center;max-width:680px;}
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:.5rem;
+      font-family:var(--font-body);font-size:.66rem;font-weight:700;
+      letter-spacing:.18em;text-transform:uppercase;
+      color:#f7717f;border:1px solid rgba(232,77,93,.35);
+      padding:.35rem 1.1rem;border-radius:999px;
+      background:rgba(232,77,93,.1);
+      margin-bottom:2rem;
+    }
+    .hero-badge::before{content:'✦';font-size:.6em;opacity:.7;}
+    .hero-badge::after{content:'✦';font-size:.6em;opacity:.7;}
+
+    .hero-logo{
+      font-family:var(--font-display);
+      font-size:clamp(5rem,14vw,10rem);
+      font-weight:700;letter-spacing:.06em;
+      background:linear-gradient(135deg,#ffc2c8 0%,#f7717f 35%,#e84d5d 65%,#fad980 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+      background-clip:text;
+      filter:drop-shadow(0 0 32px rgba(232,77,93,.45));
+      line-height:1;margin-bottom:.8rem;
+    }
+    .hero-script{
+      font-family:var(--font-script);font-size:clamp(1.4rem,3.5vw,2rem);
+      color:rgba(250,217,128,.85);margin-bottom:.4rem;
+    }
+    .hero-tagline{
+      font-family:var(--font-display);font-size:clamp(.85rem,1.8vw,1.05rem);
+      font-style:italic;color:#c2787f;letter-spacing:.06em;
+      margin-bottom:.5rem;
+    }
+    .hero-quote{
+      font-family:var(--font-display);font-size:clamp(1rem,2vw,1.2rem);
+      font-style:italic;font-weight:400;
+      color:rgba(247,232,200,.75);
+      margin-bottom:2.5rem;line-height:1.7;
+      border-left:2px solid rgba(232,77,93,.35);
+      padding-left:1.2rem;text-align:left;
+    }
+    .trait-pills{display:flex;flex-wrap:wrap;gap:.45rem;justify-content:center;margin-bottom:2.5rem;}
+    .trait-pill{
+      font-family:var(--font-body);font-size:.62rem;font-weight:700;
+      letter-spacing:.1em;padding:.28rem .8rem;border-radius:999px;
+      border:1px solid rgba(232,77,93,.28);
+      color:#c2787f;background:rgba(232,77,93,.07);
+      text-transform:uppercase;transition:all .2s;
+    }
+    .trait-pill:hover{border-color:rgba(247,113,127,.6);color:#ff9aa5;background:rgba(232,77,93,.15);}
+    .cta-btn{
+      display:inline-flex;align-items:center;gap:.6rem;
+      font-family:var(--font-body);font-size:.76rem;font-weight:700;
+      letter-spacing:.12em;text-decoration:none;padding:.9rem 2.4rem;
+      border:1px solid rgba(232,77,93,.5);border-radius:999px;
+      color:#ff9aa5;background:rgba(232,77,93,.12);
+      text-transform:uppercase;transition:all .28s;
+    }
+    .cta-btn:hover{background:rgba(232,77,93,.28);border-color:#f7717f;color:#fff;box-shadow:0 0 30px rgba(232,77,93,.35);}
+    .scroll-indicator{
+      position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+      font-family:var(--font-body);font-size:.6rem;font-weight:600;
+      letter-spacing:.15em;text-transform:uppercase;
+      color:rgba(194,120,127,.45);display:flex;flex-direction:column;align-items:center;gap:.4rem;
+    }
+    .scroll-indicator::after{
+      content:'';width:1px;height:40px;
+      background:linear-gradient(to bottom,rgba(232,77,93,.45),transparent);
+      animation:scroll-grow 2s ease-in-out infinite;
+    }
+    @keyframes scroll-grow{0%,100%{height:20px;opacity:.3;}50%{height:50px;opacity:.85;}}
+
+    /* ── Stats Row ── */
+    .stats-row{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      border-top:1px solid rgba(232,77,93,.14);
+      border-bottom:1px solid rgba(232,77,93,.14);
+      background:rgba(24,14,6,.65);backdrop-filter:blur(14px);
+    }
+    .stat-cell{
+      padding:2.2rem 1rem;text-align:center;
+      border-right:1px solid rgba(232,77,93,.1);
+    }
+    .stat-cell:last-child{border-right:none;}
+    .stat-value{
+      font-family:var(--font-display);font-size:clamp(1.8rem,4vw,2.8rem);
+      font-weight:700;color:#f7717f;display:block;margin-bottom:.3rem;
+    }
+    .stat-label{
+      font-family:var(--font-body);font-size:.62rem;font-weight:600;
+      letter-spacing:.13em;color:#7a4a50;text-transform:uppercase;
+    }
+
+    /* ── Letters Grid ── */
+    .letters-section{padding:6rem 1.5rem;max-width:1200px;margin:0 auto;}
+    .letters-title{
+      font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);
+      font-weight:700;letter-spacing:.1em;color:#f7717f;
+      text-align:center;margin-bottom:.5rem;
+    }
+    .letters-subtitle{
+      font-family:var(--font-display);font-style:italic;font-size:1rem;
+      color:#7a4a50;text-align:center;margin-bottom:3.5rem;
+    }
+    .letters-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+      gap:1px;border:1px solid rgba(232,77,93,.14);border-radius:12px;overflow:hidden;
+    }
+    .letter-block{
+      padding:2.5rem 1.8rem;background:rgba(24,14,6,.55);
+      border-right:1px solid rgba(232,77,93,.08);
+      transition:background .3s;position:relative;overflow:hidden;
+    }
+    .letter-block:last-child{border-right:none;}
+    .letter-block::after{
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse at 50% 100%,var(--letter-accent-bg,rgba(232,77,93,.08)) 0%,transparent 70%);
+      opacity:0;transition:opacity .3s;
+    }
+    .letter-block:hover::after{opacity:1;}
+    .letter-char{
+      font-family:var(--font-display);font-size:3.5rem;font-weight:700;
+      color:var(--letter-accent,#f7717f);display:block;
+      margin-bottom:.4rem;line-height:1;
+      text-shadow:0 0 18px var(--letter-shadow,rgba(232,77,93,.5));
+    }
+    .letter-name{
+      font-family:var(--font-body);font-size:.65rem;font-weight:700;
+      letter-spacing:.14em;color:#c2787f;text-transform:uppercase;
+      margin-bottom:.8rem;display:block;
+    }
+    .letter-desc{font-family:var(--font-body);font-size:.83rem;color:#7a4a50;line-height:1.65;}
+
+    /* ── Care Cards ── */
+    .care-section{padding:6rem 1.5rem;max-width:1200px;margin:0 auto;}
+    .section-label{
+      font-family:var(--font-body);font-size:.62rem;font-weight:700;
+      letter-spacing:.2em;color:#e84d5d;text-transform:uppercase;
+      margin-bottom:.4rem;
+      display:flex;align-items:center;gap:.8rem;
+    }
+    .section-label::before{content:'✦';font-size:.7em;}
+    .section-title{
+      font-family:var(--font-display);font-size:clamp(1.6rem,3.5vw,2.4rem);
+      font-weight:700;color:#ffc2c8;margin-bottom:.6rem;line-height:1.2;
+    }
+    .section-desc{
+      font-family:var(--font-body);font-size:.9rem;color:#7a4a50;
+      max-width:580px;margin-bottom:3rem;line-height:1.75;
+    }
+    .care-cards{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:1px;border:1px solid rgba(232,77,93,.12);border-radius:12px;overflow:hidden;
+    }
+    .care-card{
+      padding:2.5rem 2rem;background:rgba(24,14,6,.6);
+      position:relative;overflow:hidden;transition:background .3s;
+    }
+    .care-card:hover{background:rgba(232,77,93,.06);}
+    .care-card::before{
+      content:'';position:absolute;top:0;left:0;right:0;height:3px;
+      background:linear-gradient(to right,transparent,var(--card-color,rgba(232,77,93,.5)),transparent);
+      transform:scaleX(0);transition:transform .4s;
+    }
+    .care-card:hover::before{transform:scaleX(1);}
+    .care-card-icon{
+      width:44px;height:44px;margin-bottom:1.4rem;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid var(--card-border,rgba(232,77,93,.28));
+      border-radius:50%;
+      color:var(--card-color,#f7717f);font-size:1.3rem;
+    }
+    .care-card-title{
+      font-family:var(--font-display);font-size:1rem;font-weight:700;
+      color:var(--card-color,#ff9aa5);margin-bottom:.8rem;
+    }
+    .care-card-text{font-family:var(--font-body);font-size:.85rem;color:#7a4a50;line-height:1.72;}
+
+    /* ── Hearth Box ── */
+    .hearth-box{
+      max-width:780px;margin:0 auto 6rem;
+      border:1px solid rgba(232,77,93,.18);
+      border-radius:12px;
+      background:rgba(24,14,6,.72);
+      backdrop-filter:blur(16px);
+      padding:2.5rem;
+    }
+    .hearth-title{
+      font-family:var(--font-display);font-size:.72rem;font-weight:700;
+      letter-spacing:.18em;color:#f7717f;text-transform:uppercase;
+      margin-bottom:1.6rem;
+      display:flex;align-items:center;gap:.8rem;
+    }
+    .hearth-title::before{content:'✦';color:rgba(247,113,127,.5);font-size:.8em;}
+    .hearth-row{
+      display:grid;grid-template-columns:110px 1fr;
+      gap:1rem;align-items:start;
+      padding:.9rem 0;border-bottom:1px solid rgba(232,77,93,.08);
+    }
+    .hearth-row:last-child{border-bottom:none;}
+    .hearth-key{
+      font-family:var(--font-body);font-size:.62rem;font-weight:700;
+      letter-spacing:.1em;color:#e84d5d;text-transform:uppercase;padding-top:.1rem;
+    }
+    .hearth-val{font-family:var(--font-body);font-size:.86rem;color:#c2787f;line-height:1.65;}
+    .hearth-val strong{color:#ff9aa5;font-weight:600;}
+
+    /* ── Origin ── */
+    .origin-section{
+      padding:5rem 1.5rem;max-width:780px;margin:0 auto;text-align:center;
+    }
+    .origin-glyph{
+      font-family:var(--font-script);font-size:3.5rem;
+      color:rgba(245,190,66,.4);margin-bottom:1rem;display:block;
+    }
+    .origin-title{
+      font-family:var(--font-display);font-size:clamp(1.4rem,3vw,2rem);
+      font-weight:700;font-style:italic;color:#ffc2c8;margin-bottom:1.2rem;
+    }
+    .origin-text{
+      font-family:var(--font-body);font-size:.9rem;
+      color:#7a4a50;line-height:1.88;margin-bottom:1rem;
+    }
+
+    /* ── Contact ── */
+    .contact-section{
+      padding:7rem 1.5rem;text-align:center;
+      border-top:1px solid rgba(232,77,93,.1);
+    }
+    .contact-label{
+      font-family:var(--font-body);font-size:.62rem;font-weight:700;
+      letter-spacing:.2em;color:#e84d5d;text-transform:uppercase;margin-bottom:1rem;
+    }
+    .contact-title{
+      font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.8rem);
+      font-weight:700;font-style:italic;color:#ffc2c8;margin-bottom:.7rem;
+    }
+    .contact-sub{font-family:var(--font-body);font-size:.9rem;color:#7a4a50;margin-bottom:2.5rem;}
+    .contact-email{
+      display:inline-flex;align-items:center;gap:.7rem;
+      font-family:var(--font-body);font-size:clamp(.82rem,1.8vw,1rem);font-weight:600;
+      letter-spacing:.08em;color:#f7717f;
+      text-decoration:none;
+      border:1px solid rgba(232,77,93,.3);
+      padding:1rem 2.6rem;border-radius:999px;
+      background:rgba(232,77,93,.08);
+      transition:all .28s;
+    }
+    .contact-email:hover{background:rgba(232,77,93,.22);border-color:#f7717f;color:#fff;box-shadow:0 0 32px rgba(232,77,93,.32);}
+
+    /* ── Footer ── */
+    .site-footer{
+      border-top:1px solid rgba(232,77,93,.1);
+      padding:2rem 2.5rem;
+      display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+      background:rgba(24,14,6,.92);
+    }
+    .footer-copy{
+      font-family:var(--font-body);font-size:.62rem;font-weight:600;
+      letter-spacing:.12em;color:#4a2828;text-transform:uppercase;
+    }
+
+    /* ── Animations ── */
+    .fade-up{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+
+    @keyframes fade-in{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+    .hero-content>*{animation:fade-in .85s ease both;}
+    .hero-content>*:nth-child(1){animation-delay:.1s;}
+    .hero-content>*:nth-child(2){animation-delay:.25s;}
+    .hero-content>*:nth-child(3){animation-delay:.4s;}
+    .hero-content>*:nth-child(4){animation-delay:.55s;}
+    .hero-content>*:nth-child(5){animation-delay:.7s;}
+    .hero-content>*:nth-child(6){animation-delay:.85s;}
+    .hero-content>*:nth-child(7){animation-delay:1s;}
+  </style>
+</head>
+<body>
+
+<canvas id="bloom-canvas"></canvas>
+<div class="warm-glow" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<div class="site-wrapper">
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="glass-header flex items-center justify-between px-8 py-5">
+    <a href="/" class="logo-esfj">ESFJ</a>
+    <nav class="hidden sm:flex gap-10">
+      <a href="#letters" class="nav-link">Letters</a>
+      <a href="#care" class="nav-link">Care</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+    <div class="domain-badge hidden sm:block">esfj.kr</div>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main>
+
+    <!-- HERO -->
+    <section class="hero-section">
+      <div class="hero-bg-text" aria-hidden="true">ESFJ</div>
+      <div class="floral-ring" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <div class="hero-badge">THE CONSUL</div>
+        <div class="hero-logo">ESFJ</div>
+        <p class="hero-script">The Caregiver</p>
+        <p class="hero-tagline">Extraverted · Sensing · Feeling · Judging</p>
+        <blockquote class="hero-quote">
+          "모두가 따뜻하게 연결되는 곳,<br>
+          그 중심에 항상 그들이 있다."
+        </blockquote>
+        <div class="trait-pills">
+          <span class="trait-pill">WARM</span>
+          <span class="trait-pill">LOYAL</span>
+          <span class="trait-pill">CARING</span>
+          <span class="trait-pill">HARMONIOUS</span>
+          <span class="trait-pill">GENEROUS</span>
+          <span class="trait-pill">RELIABLE</span>
+        </div>
+        <a href="#care" class="cta-btn">
+          <span>✦ ENTER THE HEARTH</span>
+        </a>
+      </div>
+
+      <div class="scroll-indicator" aria-hidden="true">SCROLL</div>
+    </section>
+
+    <!-- STATS -->
+    <div class="stats-row fade-up">
+      <div class="stat-cell">
+        <span class="stat-value">12%</span>
+        <span class="stat-label">Of Population</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-value">Fe</span>
+        <span class="stat-label">Dominant Function</span>
+      </div>
+      <div class="stat-cell">
+        <span class="stat-value">∞</span>
+        <span class="stat-label">Hearts Connected</span>
+      </div>
+    </div>
+
+    <!-- LETTERS -->
+    <section id="letters" class="letters-section fade-up">
+      <p class="letters-title">E · S · F · J</p>
+      <p class="letters-subtitle">The four pillars of the Consul's heart</p>
+      <div class="letters-grid">
+        <div class="letter-block" style="--letter-accent:#f7717f;--letter-shadow:rgba(232,77,93,.45);--letter-accent-bg:rgba(232,77,93,.07);">
+          <span class="letter-char">E</span>
+          <span class="letter-name">Extraverted</span>
+          <p class="letter-desc">사람들과 함께할 때 에너지가 넘친다. 관계를 통해 기쁨을 얻으며, 공동체의 중심에서 빛을 발한다.</p>
+        </div>
+        <div class="letter-block" style="--letter-accent:#fad980;--letter-shadow:rgba(245,190,66,.4);--letter-accent-bg:rgba(245,190,66,.06);">
+          <span class="letter-char">S</span>
+          <span class="letter-name">Sensing</span>
+          <p class="letter-desc">현실과 구체적인 세부에 집중한다. 지금 이 순간, 주변 사람들의 필요를 예민하게 감지하고 실천한다.</p>
+        </div>
+        <div class="letter-block" style="--letter-accent:#a8c8ab;--letter-shadow:rgba(122,170,126,.4);--letter-accent-bg:rgba(122,170,126,.06);">
+          <span class="letter-char">F</span>
+          <span class="letter-name">Feeling</span>
+          <p class="letter-desc">감정과 가치로 결정을 내린다. 타인의 감정에 깊이 공감하며, 조화로운 관계를 최우선으로 여긴다.</p>
+        </div>
+        <div class="letter-block" style="--letter-accent:#afc8e0;--letter-shadow:rgba(122,168,204,.4);--letter-accent-bg:rgba(122,168,204,.06);">
+          <span class="letter-char">J</span>
+          <span class="letter-name">Judging</span>
+          <p class="letter-desc">계획하고 실행한다. 질서와 예측 가능성을 선호하며, 구조 속에서 모두를 돌보는 역할을 자처한다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARE CARDS -->
+    <section id="care" class="care-section fade-up">
+      <p class="section-label">Core Gifts</p>
+      <h2 class="section-title">영사관의 세 가지 선물</h2>
+      <p class="section-desc">ESFJ는 Fe의 따뜻한 외향 감정으로 공동체를 하나로 묶는 타고난 연결자다. 그들이 있는 곳엔 항상 온기가 흐른다.</p>
+      <div class="care-cards">
+        <div class="care-card" style="--card-color:#f7717f;--card-border:rgba(247,113,127,.3);">
+          <div class="care-card-icon">🌸</div>
+          <h3 class="care-card-title">WARMTH</h3>
+          <p class="care-card-text">진심 어린 온기로 주변 모든 이를 품는다. Fe 지배 기능은 감정적 분위기를 즉각적으로 감지하고, 모두가 환영받는 공간을 만든다.</p>
+        </div>
+        <div class="care-card" style="--card-color:#fad980;--card-border:rgba(250,217,128,.3);">
+          <div class="care-card-icon">🤝</div>
+          <h3 class="care-card-title">LOYALTY</h3>
+          <p class="care-card-text">한번 맺은 관계는 끝까지 지킨다. Si의 기억력은 소중한 사람들의 필요와 취향을 세심하게 보존하며, 변함없는 신뢰를 쌓는다.</p>
+        </div>
+        <div class="care-card" style="--card-color:#a8c8ab;--card-border:rgba(168,200,171,.3);">
+          <div class="care-card-icon">🌿</div>
+          <h3 class="care-card-title">HARMONY</h3>
+          <p class="care-card-text">갈등을 감지하고 평화를 복원한다. 공동체의 균형을 유지하는 데 탁월하며, 모두가 함께 성장하는 환경을 능동적으로 조성한다.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HEARTH BOX -->
+    <div class="hearth-box fade-up px-6">
+      <p class="hearth-title">CONSUL_PROFILE.log</p>
+      <div class="hearth-row">
+        <span class="hearth-key">H01</span>
+        <span class="hearth-val"><strong>Fe 지배</strong> — 외향 감정이 일차 기능. 집단의 감정 흐름을 주도하며 공동체 전체의 안녕을 위해 끊임없이 노력하는 사회적 접착제.</span>
+      </div>
+      <div class="hearth-row">
+        <span class="hearth-key">H02</span>
+        <span class="hearth-val"><strong>인구 비율</strong> — 전체 인구의 약 12%. MBTI 16개 유형 중 가장 흔한 유형 중 하나로, 특히 여성 비율이 높다 (약 17%).</span>
+      </div>
+      <div class="hearth-row">
+        <span class="hearth-key">H03</span>
+        <span class="hearth-val"><strong>그림자</strong> — Ti 열등 기능으로 인해 독립적 비판 사고가 취약할 수 있다. 타인의 승인에 과도하게 의존하거나 자신의 필요를 무시하는 경향이 있다.</span>
+      </div>
+      <div class="hearth-row">
+        <span class="hearth-key">H04</span>
+        <span class="hearth-val"><strong>핵심 욕구</strong> — 소속감과 인정. 공동체 안에서 의미 있는 기여를 하고 있다는 확인이 주어질 때 최고의 자신을 발휘한다.</span>
+      </div>
+    </div>
+
+    <!-- ORIGIN -->
+    <section class="origin-section fade-up">
+      <span class="origin-glyph">和</span>
+      <h2 class="origin-title">The Consul's Covenant</h2>
+      <p class="origin-text">
+        ESFJ는 인간 사회의 화합을 지탱하는 조용하고 헌신적인 기둥이다. 전 세계 인구의 약 12%를 차지하는 이들은 따뜻한 외향 감정(Fe)과 세밀한 내향 감각(Si)의 조합으로, 주변 사람들의 필요를 누구보다 예민하게 포착하고 실질적인 돌봄으로 실천한다.
+      </p>
+      <p class="origin-text">
+        이들에게 공동체는 단순한 배경이 아니라 삶의 중심이다. 모두가 서로 연결되고, 각자가 소중히 여겨지며, 아무도 소외되지 않는 세계를 만드는 것 — 그것이 ESFJ가 매일 조용히 실천하는 사명이다. 그들의 온기는 조건 없이 흐른다.
+      </p>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-section fade-up">
+      <p class="contact-label">✦ Connect with Care</p>
+      <h2 class="contact-title">Reach the Consul</h2>
+      <p class="contact-sub">따뜻한 제안, 협업, 또는 단순히 안부를 전하고 싶다면.</p>
+      <a href="mailto:hello@esfj.kr" class="contact-email">
+        <span style="opacity:.6;">✉</span>
+        hello@esfj.kr
+      </a>
+    </section>
+
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <span class="footer-copy">© 2026 esfj.kr — All rights reserved.</span>
+    <span class="footer-copy" style="opacity:0.4;">warmth · loyalty · harmony · community</span>
+  </footer>
+
+</div><!-- /.site-wrapper -->
+
+<script>
+(function () {
+  /* ─── Canvas Setup ─── */
+  const canvas = document.getElementById('bloom-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', () => { resize(); rebuildAll(); });
+  resize();
+
+  /* ─── Palette ─── */
+  const ROSE   = 'rgba(232,77,93,';
+  const GOLD   = 'rgba(245,190,66,';
+  const SAGE   = 'rgba(122,170,126,';
+  const DUST   = 'rgba(122,168,204,';
+  const CREAM  = 'rgba(247,232,200,';
+
+  /* ─── Utility ─── */
+  const rand  = (a, b) => Math.random() * (b - a) + a;
+  const randI = (a, b) => Math.floor(rand(a, b));
+  const pick  = arr => arr[randI(0, arr.length)];
+
+  /* ══════════════════════════════════
+     CLASS 1: BloomPetal — 떠오르는 꽃잎
+     수량: 45
+  ══════════════════════════════════ */
+  class BloomPetal {
+    constructor() { this.init(); }
+    init() {
+      this.x      = rand(0, canvas.width);
+      this.y      = rand(canvas.height * 0.2, canvas.height + 60);
+      this.size   = rand(4, 14);
+      this.vx     = rand(-0.35, 0.35);
+      this.vy     = rand(-0.5, -0.15);
+      this.alpha  = rand(0.06, 0.3);
+      this.angle  = rand(0, Math.PI * 2);
+      this.spin   = rand(-0.02, 0.02);
+      this.color  = pick([ROSE, GOLD, SAGE, CREAM]);
+    }
+    update() {
+      this.x     += this.vx + Math.sin(this.angle * 0.5) * 0.25;
+      this.y     += this.vy;
+      this.angle += this.spin;
+      this.alpha -= 0.00045;
+      if (this.alpha <= 0 || this.y < -30) this.init();
+    }
+    draw() {
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.angle);
+      ctx.beginPath();
+      /* petal shape: two bezier curves */
+      ctx.moveTo(0, -this.size);
+      ctx.bezierCurveTo( this.size * 0.8,  -this.size * 0.4,  this.size * 0.8, this.size * 0.4, 0, this.size);
+      ctx.bezierCurveTo(-this.size * 0.8,   this.size * 0.4, -this.size * 0.8, -this.size * 0.4, 0, -this.size);
+      ctx.fillStyle = this.color + this.alpha + ')';
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  /* ══════════════════════════════════
+     CLASS 2: WarmOrb — 따뜻한 빛 구슬
+     수량: 18
+  ══════════════════════════════════ */
+  class WarmOrb {
+    constructor() { this.init(); }
+    init() {
+      this.x      = rand(0, canvas.width);
+      this.y      = rand(0, canvas.height);
+      this.r      = rand(40, 120);
+      this.vx     = rand(-0.2, 0.2);
+      this.vy     = rand(-0.15, 0.15);
+      this.alpha  = rand(0.02, 0.08);
+      this.pulse  = rand(0, Math.PI * 2);
+      this.pSpeed = rand(0.006, 0.016);
+      this.color  = pick([ROSE, GOLD, SAGE]);
+    }
+    update() {
+      this.x     += this.vx;
+      this.y     += this.vy;
+      this.pulse += this.pSpeed;
+      if (this.x < -150) this.x = canvas.width + 150;
+      if (this.x > canvas.width + 150) this.x = -150;
+      if (this.y < -150) this.y = canvas.height + 150;
+      if (this.y > canvas.height + 150) this.y = -150;
+    }
+    draw() {
+      const a   = this.alpha * (0.7 + 0.3 * Math.sin(this.pulse));
+      const gr  = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r);
+      gr.addColorStop(0, this.color + a + ')');
+      gr.addColorStop(1, this.color + '0)');
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fillStyle = gr;
+      ctx.fill();
+    }
+  }
+
+  /* ══════════════════════════════════
+     CLASS 3: HeartMote — 미세 하트 먼지
+     수량: 35
+  ══════════════════════════════════ */
+  class HeartMote {
+    constructor() { this.init(); }
+    init() {
+      this.x     = rand(0, canvas.width);
+      this.y     = rand(0, canvas.height);
+      this.vx    = rand(-0.2, 0.2);
+      this.vy    = rand(-0.35, -0.08);
+      this.size  = rand(2, 5);
+      this.alpha = rand(0.08, 0.28);
+      this.decay = rand(0.0006, 0.002);
+      this.color = pick([ROSE, GOLD, CREAM]);
+    }
+    update() {
+      this.x     += this.vx;
+      this.y     += this.vy;
+      this.alpha -= this.decay;
+      if (this.alpha <= 0 || this.y < -10) this.init();
+    }
+    draw() {
+      const s = this.size;
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.beginPath();
+      /* tiny heart */
+      ctx.moveTo(0, s * 0.3);
+      ctx.bezierCurveTo( s,  -s * 0.4,  s * 1.6, s * 0.8, 0, s * 1.6);
+      ctx.bezierCurveTo(-s * 1.6, s * 0.8, -s, -s * 0.4, 0, s * 0.3);
+      ctx.fillStyle = this.color + this.alpha + ')';
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  /* ══════════════════════════════════
+     CLASS 4: RibbonArc — 연결 리본 호
+     수량: 14
+  ══════════════════════════════════ */
+  class RibbonArc {
+    constructor() { this.init(); }
+    init() {
+      this.x      = rand(canvas.width * 0.1, canvas.width * 0.9);
+      this.y      = rand(canvas.height * 0.1, canvas.height * 0.9);
+      this.r      = rand(30, 90);
+      this.startA = rand(0, Math.PI * 2);
+      this.endA   = this.startA + rand(Math.PI * 0.4, Math.PI * 1.2);
+      this.alpha  = rand(0.04, 0.14);
+      this.speed  = rand(0.004, 0.012) * (Math.random() > 0.5 ? 1 : -1);
+      this.color  = pick([ROSE, GOLD, DUST]);
+      this.life   = 0;
+      this.maxLife = rand(250, 550);
+    }
+    update() {
+      this.startA += this.speed;
+      this.endA   += this.speed;
+      this.life++;
+      if (this.life > this.maxLife) this.init();
+    }
+    draw() {
+      const fi = Math.min(1, this.life / 50);
+      const fo = Math.min(1, (this.maxLife - this.life) / 50);
+      const a  = this.alpha * fi * fo;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, this.startA, this.endA);
+      ctx.strokeStyle = this.color + a + ')';
+      ctx.lineWidth   = rand(0.8, 2);
+      ctx.stroke();
+    }
+  }
+
+  /* ─── Pool Init ─── */
+  let petals, orbs, motes, arcs;
+
+  function rebuildAll() {
+    petals = Array.from({ length: 45 }, () => new BloomPetal());
+    orbs   = Array.from({ length: 18 }, () => new WarmOrb());
+    motes  = Array.from({ length: 35 }, () => new HeartMote());
+    arcs   = Array.from({ length: 14 }, () => new RibbonArc());
+  }
+  rebuildAll();
+
+  /* ─── Animation Loop ─── */
+  function loop() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    orbs.forEach  (p => { p.update(); p.draw(); });
+    arcs.forEach  (p => { p.update(); p.draw(); });
+    petals.forEach(p => { p.update(); p.draw(); });
+    motes.forEach (p => { p.update(); p.draw(); });
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  /* ─── Scroll Fade-up ─── */
+  const observer = new IntersectionObserver(
+    entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+})();
+</script>
+
+</body>
+</html>
