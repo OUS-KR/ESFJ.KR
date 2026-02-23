@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESFJ — esfj.kr</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style type="text/tailwindcss">
+    @theme {
+      --color-sun-300:   #fde68a;
+      --color-sun-400:   #fbbf24;
+      --color-sun-500:   #f59e0b;
+      --color-coral-300: #fca5a5;
+      --color-coral-400: #f87171;
+      --color-coral-500: #ef4444;
+      --color-sky-300:   #7dd3fc;
+      --color-sky-400:   #38bdf8;
+      --color-mint-300:  #6ee7b7;
+      --color-mint-400:  #34d399;
+      --color-dusk-900:  #0c0708;
+      --color-dusk-800:  #170d0e;
+      --color-dusk-700:  #221316;
+      --font-display: 'DM Serif Display', 'Noto Serif KR', serif;
+      --font-sans:    'Inter', 'Noto Serif KR', sans-serif;
+    }
+  </style>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #0c0708;
+      color: #f5ede0;
+      font-family: 'Inter', 'Noto Serif KR', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Sunlit warmth background */
+    .sun-bg {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 75% 55% at 18% 22%, rgba(251,191,36,0.11) 0%, transparent 58%),
+        radial-gradient(ellipse 60% 65% at 82% 78%, rgba(248,113,113,0.09) 0%, transparent 55%),
+        radial-gradient(ellipse 55% 45% at 50% 8%,  rgba(253,230,138,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 50% at 70% 40%, rgba(52,211,153,0.05) 0%, transparent 45%);
+      animation: sunBreath 15s ease-in-out infinite alternate;
+    }
+    @keyframes sunBreath {
+      0%   { opacity: 0.75; transform: scale(1); }
+      100% { opacity: 1;    transform: scale(1.05); }
+    }
+
+    /* Vignette */
+    .vignette {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      background: radial-gradient(ellipse 90% 90% at 50% 50%, transparent 36%, rgba(12,7,8,0.88) 100%);
+    }
+
+    /* Rainbow stripe */
+    .top-stripe {
+      position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 50;
+      background: linear-gradient(90deg, #fbbf24, #f87171, #38bdf8, #34d399, #fbbf24, #f87171);
+      background-size: 400% 100%;
+      animation: rainbowFlow 5s linear infinite;
+    }
+    @keyframes rainbowFlow {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 400% 50%; }
+    }
+
+    /* Confetti particles */
+    #particle-layer {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none; overflow: hidden;
+    }
+    .particle {
+      position: absolute; opacity: 0;
+      animation: confettiFall var(--dur,10s) var(--delay,0s) ease-in-out infinite;
+    }
+    @keyframes confettiFall {
+      0%   { transform: translateY(-5vh) translateX(0) rotate(0deg) scale(0.5);   opacity: 0; }
+      8%   { opacity: 0.7; }
+      50%  { transform: translateY(50vh) translateX(var(--dx,25px)) rotate(160deg) scale(1); }
+      92%  { opacity: 0.3; }
+      100% { transform: translateY(106vh) translateX(var(--dx2,-20px)) rotate(320deg) scale(0.6); opacity: 0; }
+    }
+
+    /* Corner decor */
+    .corner-decor {
+      position: fixed; width: 70px; height: 70px; z-index: 4; pointer-events: none; opacity: 0.2;
+    }
+    .corner-tl { top: 10px; left: 10px; }
+    .corner-tr { top: 10px; right: 10px; transform: scaleX(-1); }
+    .corner-bl { bottom: 10px; left: 10px; transform: scaleY(-1); }
+    .corner-br { bottom: 10px; right: 10px; transform: scale(-1,-1); }
+
+    /* Main wrapper */
+    .main { position: relative; z-index: 10; max-width: 480px; margin: 0 auto; padding: 60px 16px 40px; }
+
+    /* Section card */
+    .section-card {
+      background: rgba(23,13,14,0.82);
+      border: 1px solid rgba(251,191,36,0.16);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 18px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 4px 36px rgba(0,0,0,0.55), inset 0 1px 0 rgba(251,191,36,0.09);
+    }
+
+    /* Avatar ring */
+    .avatar-ring {
+      width: 110px; height: 110px; border-radius: 50%; padding: 3px;
+      background: conic-gradient(#fbbf24, #f87171, #38bdf8, #34d399, #fde68a, #fbbf24);
+      animation: ringRotate 6s linear infinite;
+      margin: 0 auto 16px; position: relative;
+    }
+    @keyframes ringRotate { to { transform: rotate(360deg); } }
+    .avatar-ring img {
+      width: 100%; height: 100%; border-radius: 50%;
+      border: 3px solid #0c0708; object-fit: cover;
+    }
+    .status-dot {
+      position: absolute; bottom: 5px; right: 5px;
+      width: 15px; height: 15px; border-radius: 50%;
+      background: #34d399; border: 2px solid #0c0708;
+      animation: dotGlow 2.5s ease-in-out infinite;
+    }
+    @keyframes dotGlow {
+      0%,100% { box-shadow: 0 0 0 0 rgba(52,211,153,0.55); }
+      50%      { box-shadow: 0 0 0 8px rgba(52,211,153,0); }
+    }
+
+    /* Shimmer text */
+    .shimmer-text {
+      background: linear-gradient(90deg, #fbbf24, #f87171, #38bdf8, #34d399, #fbbf24);
+      background-size: 300% 100%;
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer { 0%{background-position:0% 50%;} 100%{background-position:300% 50%;} }
+
+    /* Tag pills */
+    .tag {
+      display: inline-block; padding: 3px 11px; border-radius: 999px;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+      border: 1px solid; margin: 3px;
+    }
+
+    /* Type cards */
+    .type-card {
+      background: rgba(251,191,36,0.07);
+      border: 1px solid rgba(251,191,36,0.22);
+      border-radius: 12px; padding: 12px 6px; text-align: center; flex: 1;
+    }
+
+    /* Link buttons */
+    .link-btn {
+      display: flex; align-items: center; gap: 13px;
+      width: 100%; padding: 13px 16px; border-radius: 14px;
+      border: 1px solid rgba(251,191,36,0.18);
+      background: rgba(23,13,14,0.7);
+      color: #f5ede0; text-decoration: none;
+      font-size: 14px; font-weight: 600;
+      transition: all 0.3s ease; backdrop-filter: blur(6px);
+      margin-bottom: 9px;
+    }
+    .link-btn:hover {
+      background: rgba(251,191,36,0.12);
+      border-color: rgba(251,191,36,0.45);
+      transform: translateX(4px);
+      box-shadow: 0 0 18px rgba(251,191,36,0.14);
+    }
+    .link-btn .icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+
+    /* Progress bars */
+    .progress-track {
+      background: rgba(255,255,255,0.07); border-radius: 999px; height: 7px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; border-radius: 999px; width: 0%;
+      transition: width 1.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    /* Community meter */
+    .community-bar {
+      display: flex; gap: 3px; margin-top: 6px;
+    }
+    .community-seg {
+      flex: 1; height: 11px; border-radius: 2px;
+      background: rgba(251,191,36,0.1);
+      border: 1px solid rgba(251,191,36,0.15);
+      transition: all 0.38s ease;
+    }
+    .community-seg.lit {
+      background: linear-gradient(90deg, #fbbf24, #f87171);
+      border-color: #fbbf24;
+      box-shadow: 0 0 5px rgba(251,191,36,0.5);
+    }
+
+    /* Harmony grid */
+    .harmony-card {
+      background: rgba(251,191,36,0.05);
+      border: 1px solid rgba(251,191,36,0.13);
+      border-radius: 13px; padding: 14px; text-align: center;
+      transition: all 0.3s;
+    }
+    .harmony-card:hover {
+      border-color: rgba(251,191,36,0.38);
+      background: rgba(251,191,36,0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Event/activity cards */
+    .event-card {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px; border-radius: 12px;
+      border: 1px solid rgba(251,191,36,0.12);
+      background: rgba(23,13,14,0.7);
+      margin-bottom: 9px; transition: all 0.2s;
+    }
+    .event-card:hover { border-color: rgba(251,191,36,0.3); }
+    .event-card:last-child { margin-bottom: 0; }
+    .event-dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px;
+    }
+
+    /* Carousel */
+    .carousel-wrapper { position: relative; overflow: hidden; border-radius: 14px; }
+    .carousel-track { display: flex; transition: transform 0.5s cubic-bezier(0.4,0,0.2,1); }
+    .carousel-slide { min-width: 100%; position: relative; }
+    .carousel-slide img { width: 100%; height: 210px; object-fit: cover; display: block; }
+    .carousel-caption {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px;
+      background: linear-gradient(transparent, rgba(12,7,8,0.9));
+      font-size: 12px; color: #fbbf24;
+    }
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(12,7,8,0.65); border: 1px solid rgba(251,191,36,0.32);
+      color: #fbbf24; width: 34px; height: 34px; border-radius: 50%;
+      cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; backdrop-filter: blur(4px);
+    }
+    .carousel-btn:hover { background: rgba(251,191,36,0.2); }
+    .carousel-prev { left: 8px; }
+    .carousel-next { right: 8px; }
+    .carousel-dots { display: flex; justify-content: center; gap: 6px; margin-top: 10px; }
+    .carousel-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: rgba(251,191,36,0.28); cursor: pointer; transition: all 0.2s;
+    }
+    .carousel-dot.active { background: #fbbf24; transform: scale(1.35); }
+
+    /* Music player */
+    .vinyl {
+      width: 78px; height: 78px; border-radius: 50%; flex-shrink: 0;
+      background: conic-gradient(
+        #1a0a0b 0deg, #2e1214 60deg, #1a0a0b 120deg,
+        #3d181a 180deg, #1a0a0b 240deg, #2e1214 300deg, #1a0a0b 360deg
+      );
+      position: relative; cursor: pointer;
+      border: 3px solid rgba(251,191,36,0.32);
+    }
+    .vinyl::after {
+      content: ''; position: absolute; inset: 30%;
+      border-radius: 50%; background: #fbbf24;
+      box-shadow: 0 0 10px rgba(251,191,36,0.65);
+    }
+    .vinyl.playing { animation: vinylSpin 5s linear infinite; }
+    @keyframes vinylSpin { to { transform: rotate(360deg); } }
+    .track-item {
+      display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px;
+      cursor: pointer; transition: background 0.2s; font-size: 13px;
+    }
+    .track-item:hover { background: rgba(251,191,36,0.09); }
+    .track-item.active { background: rgba(251,191,36,0.15); color: #fbbf24; }
+
+    /* Project cards */
+    .project-card {
+      background: rgba(23,13,14,0.88);
+      border: 1px solid rgba(251,191,36,0.12);
+      border-radius: 13px; padding: 15px;
+      transition: all 0.3s; cursor: pointer;
+    }
+    .project-card:hover {
+      border-color: rgba(251,191,36,0.42);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 26px rgba(251,191,36,0.1);
+    }
+
+    /* Timeline */
+    .timeline { position: relative; padding-left: 22px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 1px;
+      background: linear-gradient(180deg, #fbbf24, #f87171, transparent);
+    }
+    .timeline-item { position: relative; margin-bottom: 20px; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -19px; top: 5px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #fbbf24; border: 2px solid #f87171;
+      box-shadow: 0 0 7px rgba(251,191,36,0.6);
+    }
+
+    /* FAQ */
+    details { border-bottom: 1px solid rgba(251,191,36,0.11); }
+    details summary {
+      padding: 13px 0; cursor: pointer; font-weight: 600; font-size: 14px;
+      list-style: none; display: flex; justify-content: space-between; align-items: center;
+      color: #fde68a;
+    }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::after { content: '+'; color: #fbbf24; font-size: 18px; }
+    details[open] summary::after { content: '−'; }
+    details p { padding: 0 0 13px; font-size: 13px; color: #9d8070; line-height: 1.78; }
+
+    /* Forms */
+    .form-input {
+      width: 100%; background: rgba(23,13,14,0.88);
+      border: 1px solid rgba(251,191,36,0.2);
+      color: #f5ede0; border-radius: 10px; padding: 11px 13px;
+      font-size: 14px; outline: none; transition: border-color 0.2s;
+      margin-bottom: 10px;
+    }
+    .form-input:focus { border-color: rgba(251,191,36,0.55); }
+    .form-input option { background: #221316; }
+    .btn-submit {
+      width: 100%; padding: 13px; border-radius: 12px; border: none; cursor: pointer;
+      font-weight: 700; font-size: 14px; letter-spacing: 0.06em;
+      background: linear-gradient(135deg, #fbbf24, #f87171);
+      color: #0c0708; transition: all 0.3s;
+      font-family: 'DM Serif Display', serif;
+    }
+    .btn-submit:hover { opacity: 0.87; transform: translateY(-1px); box-shadow: 0 5px 18px rgba(251,191,36,0.25); }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: all 0.7s cubic-bezier(0.4,0,0.2,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Divider */
+    .sun-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(251,191,36,0.48), transparent);
+      margin: 8px 0 16px;
+    }
+
+    /* Scroll-to-top */
+    .scroll-top {
+      position: fixed; bottom: 20px; right: 20px; z-index: 100;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(251,191,36,0.13); border: 1px solid rgba(251,191,36,0.38);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; backdrop-filter: blur(4px);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .scroll-top.show { opacity: 1; }
+
+    /* Sec label */
+    .sec-label {
+      font-size: 10px; color: #6b4a30; letter-spacing: 0.22em;
+      text-transform: uppercase; margin-bottom: 14px;
+      font-family: 'DM Serif Display', serif;
+    }
+
+    /* KPI chips */
+    .kpi-chip {
+      background: rgba(251,191,36,0.07);
+      border: 1px solid rgba(251,191,36,0.18);
+      border-radius: 11px; padding: 10px 12px; text-align: center; flex: 1;
+    }
+
+    /* Checklist */
+    .check-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 9px 0; border-bottom: 1px solid rgba(251,191,36,0.08);
+      font-size: 13px; color: #c4a882;
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-icon {
+      width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center; font-size: 11px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sun-bg"></div>
+  <div class="vignette"></div>
+  <div class="top-stripe"></div>
+  <div id="particle-layer"></div>
+
+  <!-- Corner SVG decor -->
+  <svg class="corner-decor corner-tl" viewBox="0 0 70 70" fill="none">
+    <path d="M4 66 L4 4 L66 4" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="4"  cy="4"  r="3"   fill="#fbbf24"/>
+    <circle cx="35" cy="4"  r="2"   fill="#f87171" opacity="0.6"/>
+    <circle cx="4"  cy="35" r="2"   fill="#38bdf8" opacity="0.6"/>
+    <path d="M18 4 Q22 9 18 14 Q14 9 18 4Z"  fill="#fbbf24" opacity="0.5"/>
+    <path d="M4 18 Q9 22 4 26 Q-1 22 4 18Z" fill="#f87171" opacity="0.4"/>
+  </svg>
+  <svg class="corner-decor corner-tr" viewBox="0 0 70 70" fill="none">
+    <path d="M4 66 L4 4 L66 4" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="4"  cy="4"  r="3"   fill="#fbbf24"/>
+    <circle cx="35" cy="4"  r="2"   fill="#38bdf8" opacity="0.6"/>
+    <path d="M18 4 Q22 9 18 14 Q14 9 18 4Z" fill="#f87171" opacity="0.5"/>
+  </svg>
+  <svg class="corner-decor corner-bl" viewBox="0 0 70 70" fill="none">
+    <path d="M4 66 L4 4 L66 4" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="4" cy="4" r="3" fill="#fbbf24"/>
+    <path d="M18 4 Q22 9 18 14 Q14 9 18 4Z" fill="#34d399" opacity="0.4"/>
+  </svg>
+  <svg class="corner-decor corner-br" viewBox="0 0 70 70" fill="none">
+    <path d="M4 66 L4 4 L66 4" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="4" cy="4" r="3" fill="#fbbf24"/>
+    <path d="M18 4 Q22 9 18 14 Q14 9 18 4Z" fill="#fbbf24" opacity="0.4"/>
+  </svg>
+
+  <!-- Scroll to top -->
+  <div class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="#fbbf24">
+      <path d="M7 2l5 5H2z"/>
+    </svg>
+  </div>
+
+  <main class="main">
+
+    <!-- ① HERO -->
+    <section class="section-card reveal" style="text-align:center;">
+      <p style="font-size:10px;color:#6b4a30;letter-spacing:0.25em;text-transform:uppercase;margin-bottom:14px;font-family:'DM Serif Display',serif;">
+        ☀ The Consul ☀
+      </p>
+      <div class="avatar-ring">
+        <img
+          src="https://api.dicebear.com/9.x/shapes/svg?seed=esfj&backgroundColor=170d0e&color=fbbf24,f87171,38bdf8,34d399"
+          alt="ESFJ Avatar"
+        />
+        <div class="status-dot"></div>
+      </div>
+      <h1 class="shimmer-text" style="font-family:'DM Serif Display',serif;font-size:46px;font-weight:400;letter-spacing:0.12em;line-height:1.1;">ESFJ</h1>
+      <p style="font-size:13px;color:#fbbf24;font-weight:600;margin-top:5px;letter-spacing:0.09em;font-family:'DM Serif Display',serif;">esfj.kr · 집정관형</p>
+      <div class="sun-divider" style="margin:14px 0;"></div>
+      <p style="font-size:13px;color:#9d8070;font-style:italic;line-height:1.85;margin-bottom:16px;font-family:'DM Serif Display',serif;">
+        "나는 당신이 빛날 수 있도록<br/>
+        <em style="color:#fde68a;">무대를 만드는 사람입니다.</em>"
+      </p>
+      <div style="margin-bottom:16px;">
+        <span class="tag" style="border-color:rgba(251,191,36,0.42);color:#fde68a;background:rgba(251,191,36,0.09);">#집정관</span>
+        <span class="tag" style="border-color:rgba(248,113,113,0.4);color:#fca5a5;background:rgba(248,113,113,0.08);">#공동체</span>
+        <span class="tag" style="border-color:rgba(56,189,248,0.38);color:#7dd3fc;background:rgba(56,189,248,0.07);">#조화</span>
+        <span class="tag" style="border-color:rgba(52,211,153,0.36);color:#6ee7b7;background:rgba(52,211,153,0.07);">#친화력</span>
+      </div>
+
+      <!-- E·S·F·J type cards -->
+      <div style="display:flex;gap:8px;margin-bottom:18px;">
+        <div class="type-card">
+          <div style="font-size:22px;font-weight:400;color:#fbbf24;font-family:'DM Serif Display',serif;">E</div>
+          <div style="font-size:10px;color:#6b4a30;margin-top:3px;">Extroverted<br/>외향형</div>
+        </div>
+        <div class="type-card" style="border-color:rgba(248,113,113,0.25);background:rgba(248,113,113,0.07);">
+          <div style="font-size:22px;font-weight:400;color:#f87171;font-family:'DM Serif Display',serif;">S</div>
+          <div style="font-size:10px;color:#6b4a30;margin-top:3px;">Sensing<br/>감각형</div>
+        </div>
+        <div class="type-card" style="border-color:rgba(56,189,248,0.25);background:rgba(56,189,248,0.07);">
+          <div style="font-size:22px;font-weight:400;color:#38bdf8;font-family:'DM Serif Display',serif;">F</div>
+          <div style="font-size:10px;color:#6b4a30;margin-top:3px;">Feeling<br/>감정형</div>
+        </div>
+        <div class="type-card" style="border-color:rgba(52,211,153,0.25);background:rgba(52,211,153,0.07);">
+          <div style="font-size:22px;font-weight:400;color:#34d399;font-family:'DM Serif Display',serif;">J</div>
+          <div style="font-size:10px;color:#6b4a30;margin-top:3px;">Judging<br/>판단형</div>
+        </div>
+      </div>
+
+      <!-- Community Meter -->
+      <div style="text-align:left;">
+        <p class="sec-label" style="margin-bottom:5px;">공동체 에너지 지수</p>
+        <div class="community-bar" id="communityMeter"></div>
+        <div style="display:flex;justify-content:space-between;margin-top:5px;">
+          <span style="font-size:10px;color:#4a3020;">혼자</span>
+          <span style="font-size:10px;color:#fbbf24;font-weight:700;font-family:'DM Serif Display',serif;">함께 MAX ☀</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ② KPI BOARD -->
+    <section class="section-card reveal" style="border-color:rgba(248,113,113,0.2);">
+      <p class="sec-label">Consul Stats</p>
+      <div style="display:flex;gap:9px;">
+        <div class="kpi-chip">
+          <p style="font-size:22px;font-weight:700;color:#fbbf24;font-family:'DM Serif Display',serif;">9–13%</p>
+          <p style="font-size:10px;color:#6b4a30;margin-top:2px;">전 세계 인구</p>
+        </div>
+        <div class="kpi-chip" style="border-color:rgba(248,113,113,0.2);">
+          <p style="font-size:22px;font-weight:700;color:#f87171;font-family:'DM Serif Display',serif;">#1</p>
+          <p style="font-size:10px;color:#6b4a30;margin-top:2px;">사회적 결속력</p>
+        </div>
+        <div class="kpi-chip" style="border-color:rgba(52,211,153,0.2);">
+          <p style="font-size:22px;font-weight:700;color:#34d399;font-family:'DM Serif Display',serif;">∞</p>
+          <p style="font-size:10px;color:#6b4a30;margin-top:2px;">배려의 크기</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ③ ANNOUNCEMENT -->
+    <section class="section-card reveal" style="border-color:rgba(251,191,36,0.3);background:rgba(251,191,36,0.05);">
+      <div style="display:flex;align-items:flex-start;gap:12px;">
+        <span style="font-size:22px;flex-shrink:0;">🎉</span>
+        <div>
+          <p style="font-size:10px;color:#fbbf24;letter-spacing:0.18em;font-weight:700;font-family:'DM Serif Display',serif;">Announcement</p>
+          <p style="font-size:14px;color:#f5ede0;margin-top:3px;">
+            새로운 커뮤니티 가이드 <strong style="color:#fde68a;">Consul's Table Season 3</strong> 오픈 — 함께 더 따뜻한 세상을 만들어가요.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ④ SOCIAL LINKS -->
+    <section class="section-card reveal">
+      <p class="sec-label">Connect</p>
+      <a href="https://instagram.com/esfj.kr" class="link-btn" target="_blank" rel="noopener">
+        <span class="icon" style="background:linear-gradient(135deg,#fbbf24,#f87171);">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="white">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+          </svg>
+        </span>
+        <span>Instagram</span>
+        <span style="margin-left:auto;font-size:12px;color:#4a3020;">@esfj.kr</span>
+      </a>
+      <a href="https://youtube.com/@esfj.kr" class="link-btn" target="_blank" rel="noopener">
+        <span class="icon" style="background:#dc2626;">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="white">
+            <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </span>
+        <span>YouTube</span>
+        <span style="margin-left:auto;font-size:12px;color:#4a3020;">@esfj.kr</span>
+      </a>
+      <a href="https://x.com/esfj_kr" class="link-btn" target="_blank" rel="noopener">
+        <span class="icon" style="background:#1a0d0e;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </span>
+        <span>X / Twitter</span>
+        <span style="margin-left:auto;font-size:12px;color:#4a3020;">@esfj_kr</span>
+      </a>
+      <a href="https://github.com/esfj-kr" class="link-btn" target="_blank" rel="noopener">
+        <span class="icon" style="background:#170d0e;">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="white">
+            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </span>
+        <span>GitHub</span>
+        <span style="margin-left:auto;font-size:12px;color:#4a3020;">github.com/esfj-kr</span>
+      </a>
+      <a href="mailto:hello@esfj.kr" class="link-btn">
+        <span class="icon" style="background:linear-gradient(135deg,#fbbf24,#34d399);">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="white">
+            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+        </span>
+        <span>Email</span>
+        <span style="margin-left:auto;font-size:12px;color:#4a3020;">hello@esfj.kr</span>
+      </a>
+    </section>
+
+    <!-- ⑤ CONSUL TRAITS -->
+    <section class="section-card reveal">
+      <p class="sec-label">Consul Traits</p>
+      <div style="display:flex;flex-direction:column;gap:15px;">
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+            <span style="font-size:13px;font-weight:600;color:#fde68a;">☀ 사교성 (Sociability)</span>
+            <span style="font-size:13px;font-weight:700;color:#fbbf24;" data-target="98">0%</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="background:linear-gradient(90deg,#fbbf24,#f59e0b);" data-width="98"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+            <span style="font-size:13px;font-weight:600;color:#fca5a5;">🤗 배려와 돌봄 (Caring)</span>
+            <span style="font-size:13px;font-weight:700;color:#f87171;" data-target="97">0%</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="background:linear-gradient(90deg,#f87171,#ef4444);" data-width="97"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+            <span style="font-size:13px;font-weight:600;color:#7dd3fc;">🌐 조화 추구 (Harmony)</span>
+            <span style="font-size:13px;font-weight:700;color:#38bdf8;" data-target="95">0%</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="background:linear-gradient(90deg,#38bdf8,#0ea5e9);" data-width="95"></div></div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
+            <span style="font-size:13px;font-weight:600;color:#6ee7b7;">🌱 책임감 (Responsibility)</span>
+            <span style="font-size:13px;font-weight:700;color:#34d399;" data-target="96">0%</span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="background:linear-gradient(90deg,#34d399,#22c55e);" data-width="96"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑥ HARMONY GRID -->
+    <section class="section-card reveal">
+      <p class="sec-label">Consul's Gifts</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="harmony-card">
+          <div style="font-size:24px;margin-bottom:8px;">🎊</div>
+          <p style="font-size:12px;font-weight:700;color:#fde68a;">Party Planner</p>
+          <p style="font-size:11px;color:#6b4a30;margin-top:4px;line-height:1.5;">모든 사람이 즐거운 자리를 만드는 능력</p>
+        </div>
+        <div class="harmony-card">
+          <div style="font-size:24px;margin-bottom:8px;">🌉</div>
+          <p style="font-size:12px;font-weight:700;color:#7dd3fc;">Bridge Builder</p>
+          <p style="font-size:11px;color:#6b4a30;margin-top:4px;line-height:1.5;">갈등을 녹이고 관계를 이어주는 능력</p>
+        </div>
+        <div class="harmony-card">
+          <div style="font-size:24px;margin-bottom:8px;">📋</div>
+          <p style="font-size:12px;font-weight:700;color:#fde68a;">Care Organizer</p>
+          <p style="font-size:11px;color:#6b4a30;margin-top:4px;line-height:1.5;">섬세하게 모든 것을 준비하는 실행력</p>
+        </div>
+        <div class="harmony-card">
+          <div style="font-size:24px;margin-bottom:8px;">💛</div>
+          <p style="font-size:12px;font-weight:700;color:#6ee7b7;">Warm Anchor</p>
+          <p style="font-size:11px;color:#6b4a30;margin-top:4px;line-height:1.5;">공동체를 하나로 묶는 따뜻한 중심</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑦ CONSUL VOICE -->
+    <section class="section-card reveal" style="border-color:rgba(248,113,113,0.16);">
+      <p class="sec-label">Consul's Voice</p>
+      <div style="display:flex;flex-direction:column;gap:13px;">
+        <div style="border-left:3px solid #fbbf24;padding-left:14px;">
+          <p style="font-size:13px;color:#f5ede0;font-style:italic;line-height:1.82;font-family:'DM Serif Display',serif;">"모두가 환영받는다고 느끼는 공간, 그것이 내가 만들고 싶은 세상입니다."</p>
+          <p style="font-size:11px;color:#4a3020;margin-top:3px;">— 커뮤니티 노트</p>
+        </div>
+        <div style="border-left:3px solid #f87171;padding-left:14px;">
+          <p style="font-size:13px;color:#f5ede0;font-style:italic;line-height:1.82;font-family:'DM Serif Display',serif;">"전통은 우리가 서로 연결되어 있다는 증거입니다. 나는 그 연결을 소중히 지킵니다."</p>
+          <p style="font-size:11px;color:#4a3020;margin-top:3px;">— 가족 모임에서</p>
+        </div>
+        <div style="border-left:3px solid #38bdf8;padding-left:14px;">
+          <p style="font-size:13px;color:#f5ede0;font-style:italic;line-height:1.82;font-family:'DM Serif Display',serif;">"당신이 힘들 때 가장 먼저 달려가는 것, 그것이 제 사명입니다."</p>
+          <p style="font-size:11px;color:#4a3020;margin-top:3px;">— 친구에게</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑧ COMMUNITY EVENTS -->
+    <section class="section-card reveal">
+      <p class="sec-label">Community Board</p>
+      <div>
+        <div class="event-card">
+          <div class="event-dot" style="background:#fbbf24;box-shadow:0 0 5px rgba(251,191,36,0.5);"></div>
+          <div>
+            <p style="font-size:13px;font-weight:600;color:#fde68a;">🎉 겨울 모임 준비 완료</p>
+            <p style="font-size:12px;color:#6b4a30;margin-top:2px;line-height:1.5;">올해 마지막 커뮤니티 모임 — 모두가 따뜻하게 한 해를 마무리하는 자리.</p>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-dot" style="background:#38bdf8;box-shadow:0 0 5px rgba(56,189,248,0.5);"></div>
+          <div>
+            <p style="font-size:13px;font-weight:600;color:#7dd3fc;">📚 독서 모임 모집 중</p>
+            <p style="font-size:12px;color:#6b4a30;margin-top:2px;line-height:1.5;">매월 첫째 주 토요일, 함께 읽고 이야기 나누는 북클럽.</p>
+          </div>
+        </div>
+        <div class="event-card">
+          <div class="event-dot" style="background:#34d399;box-shadow:0 0 5px rgba(52,211,153,0.5);"></div>
+          <div>
+            <p style="font-size:13px;font-weight:600;color:#6ee7b7;">🌱 자원봉사 캠페인</p>
+            <p style="font-size:12px;color:#6b4a30;margin-top:2px;line-height:1.5;">지역 사회를 위한 작은 나눔 — 함께하면 더 큰 변화를 만듭니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑨ FEATURED VIDEO -->
+    <section class="section-card reveal">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px;">
+        <p class="sec-label" style="margin-bottom:0;">Featured Video</p>
+        <span style="font-size:11px;color:#f87171;">▶ 44.8K views</span>
+      </div>
+      <div style="border-radius:12px;overflow:hidden;border:1px solid rgba(251,191,36,0.18);">
+        <iframe
+          width="100%" height="215"
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          title="ESFJ Featured Video"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          style="display:block;">
+        </iframe>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:10px;">
+        <p style="font-size:13px;color:#fde68a;font-weight:600;font-family:'DM Serif Display',serif;">ESFJ 집정관형 완전 이해 | 세상을 따뜻하게 만드는 사람</p>
+        <span style="font-size:11px;color:#34d399;">6.7K 좋아요</span>
+      </div>
+    </section>
+
+    <!-- ⑩ VIDEO PLAYLIST -->
+    <section class="section-card reveal">
+      <p class="sec-label">Playlist</p>
+      <div style="display:flex;flex-direction:column;gap:9px;">
+        <a href="https://youtube.com/@esfj.kr" target="_blank" rel="noopener"
+           style="display:flex;gap:10px;align-items:center;text-decoration:none;padding:8px;border-radius:10px;border:1px solid rgba(251,191,36,0.11);transition:all 0.2s;"
+           onmouseover="this.style.background='rgba(251,191,36,0.08)'"
+           onmouseout="this.style.background='transparent'">
+          <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="v1" style="width:78px;height:50px;border-radius:6px;object-fit:cover;" />
+          <div>
+            <p style="font-size:13px;color:#f5ede0;font-weight:600;line-height:1.4;">ESFJ가 관계를 유지하는 법 — 모두를 기억하는 사람</p>
+            <p style="font-size:11px;color:#4a3020;margin-top:2px;">13:15 · 28K views</p>
+          </div>
+        </a>
+        <a href="https://youtube.com/@esfj.kr" target="_blank" rel="noopener"
+           style="display:flex;gap:10px;align-items:center;text-decoration:none;padding:8px;border-radius:10px;border:1px solid rgba(251,191,36,0.11);transition:all 0.2s;"
+           onmouseover="this.style.background='rgba(251,191,36,0.08)'"
+           onmouseout="this.style.background='transparent'">
+          <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="v2" style="width:78px;height:50px;border-radius:6px;object-fit:cover;" />
+          <div>
+            <p style="font-size:13px;color:#f5ede0;font-weight:600;line-height:1.4;">집정관형의 번아웃 — 주는 것에 지쳤을 때</p>
+            <p style="font-size:11px;color:#4a3020;margin-top:2px;">10:02 · 22K views</p>
+          </div>
+        </a>
+        <a href="https://youtube.com/@esfj.kr" target="_blank" rel="noopener"
+           style="display:flex;gap:10px;align-items:center;text-decoration:none;padding:8px;border-radius:10px;border:1px solid rgba(251,191,36,0.11);transition:all 0.2s;"
+           onmouseover="this.style.background='rgba(251,191,36,0.08)'"
+           onmouseout="this.style.background='transparent'">
+          <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" alt="v3" style="width:78px;height:50px;border-radius:6px;object-fit:cover;" />
+          <div>
+            <p style="font-size:13px;color:#f5ede0;font-weight:600;line-height:1.4;">ESFJ의 진짜 힘 — 공동체를 살아있게 만드는 사람</p>
+            <p style="font-size:11px;color:#4a3020;margin-top:2px;">15:38 · 36K views</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ⑪ IMAGE CAROUSEL -->
+    <section class="section-card reveal" style="padding:24px 16px;">
+      <p class="sec-label" style="padding:0 8px;">Gallery</p>
+      <div class="carousel-wrapper">
+        <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=480&q=80" alt="Community" />
+            <div class="carousel-caption">☀ 함께 — 모두가 빛나는 순간</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=480&q=80" alt="Gathering" />
+            <div class="carousel-caption">☀ 모임 — 연결이 만드는 기적</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=480&q=80" alt="Celebration" />
+            <div class="carousel-caption">☀ 축제 — 기쁨을 함께 나누다</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=480&q=80" alt="Care" />
+            <div class="carousel-caption">☀ 돌봄 — 작은 정성이 큰 사랑이 된다</div>
+          </div>
+          <div class="carousel-slide">
+            <img src="https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=480&q=80" alt="Warmth" />
+            <div class="carousel-caption">☀ 온기 — 언제나 당신 곁에</div>
+          </div>
+        </div>
+        <button class="carousel-btn carousel-prev" id="carouselPrev">‹</button>
+        <button class="carousel-btn carousel-next" id="carouselNext">›</button>
+      </div>
+      <div class="carousel-dots" id="carouselDots">
+        <div class="carousel-dot active" data-index="0"></div>
+        <div class="carousel-dot" data-index="1"></div>
+        <div class="carousel-dot" data-index="2"></div>
+        <div class="carousel-dot" data-index="3"></div>
+        <div class="carousel-dot" data-index="4"></div>
+      </div>
+    </section>
+
+    <!-- ⑫ SPOTLIGHT -->
+    <section class="section-card reveal" style="padding:0;overflow:hidden;border-radius:20px;">
+      <div style="position:relative;">
+        <img src="https://images.unsplash.com/photo-1526510747491-58f928ec870f?w=480&q=80" alt="Spotlight" style="width:100%;height:196px;object-fit:cover;display:block;" />
+        <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(12,7,8,0.92) 100%);display:flex;align-items:flex-end;padding:18px;">
+          <div>
+            <p style="font-size:10px;color:#fbbf24;letter-spacing:0.2em;font-weight:700;font-family:'DM Serif Display',serif;">Spotlight</p>
+            <p style="font-size:15px;color:#fff;font-weight:700;margin-top:4px;font-family:'DM Serif Display',serif;">ESFJ — 세상을 따뜻하게 연결하는 사람</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑬ CARE CHECKLIST -->
+    <section class="section-card reveal">
+      <p class="sec-label">Today's Giving List</p>
+      <div>
+        <div class="check-item">
+          <div class="check-icon" style="background:rgba(52,211,153,0.15);color:#34d399;">✓</div>
+          <span style="color:#6ee7b7;text-decoration:line-through;opacity:0.7;">팀원 생일 케이크 준비</span>
+        </div>
+        <div class="check-item">
+          <div class="check-icon" style="background:rgba(52,211,153,0.15);color:#34d399;">✓</div>
+          <span style="color:#6ee7b7;text-decoration:line-through;opacity:0.7;">커뮤니티 모임 장소 예약</span>
+        </div>
+        <div class="check-item">
+          <div class="check-icon" style="background:rgba(52,211,153,0.15);color:#34d399;">✓</div>
+          <span style="color:#6ee7b7;text-decoration:line-through;opacity:0.7;">친구 고민 상담 연락하기</span>
+        </div>
+        <div class="check-item">
+          <div class="check-icon" style="background:rgba(251,191,36,0.12);color:#fbbf24;">○</div>
+          <span>나 자신에게도 친절하기 ☀</span>
+        </div>
+        <div class="check-item">
+          <div class="check-icon" style="background:rgba(251,191,36,0.12);color:#fbbf24;">○</div>
+          <span>내 감정도 소중히 돌보기</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑭ MUSIC PLAYER -->
+    <section class="section-card reveal">
+      <p class="sec-label">Now Playing</p>
+      <div style="display:flex;gap:16px;align-items:center;">
+        <div class="vinyl" id="vinyl" onclick="toggleMusic()"></div>
+        <div style="flex:1;">
+          <p style="font-size:14px;font-weight:700;color:#fde68a;font-family:'DM Serif Display',serif;" id="trackTitle">Sunlit Gathering</p>
+          <p style="font-size:12px;color:#4a3020;" id="trackArtist">ESFJ Community Choir</p>
+          <div style="margin-top:8px;">
+            <div class="progress-track">
+              <div class="progress-fill" id="musicProgress" style="background:linear-gradient(90deg,#fbbf24,#f87171);width:0%;transition:width 0.1s linear;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:4px;">
+              <span style="font-size:10px;color:#4a3020;" id="currentTime">0:00</span>
+              <span style="font-size:10px;color:#4a3020;">4:18</span>
+            </div>
+          </div>
+        </div>
+        <button onclick="toggleMusic()" id="playBtn"
+          style="background:none;border:1px solid rgba(251,191,36,0.38);color:#fbbf24;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:17px;display:flex;align-items:center;justify-content:center;">▶</button>
+      </div>
+      <div style="margin-top:12px;">
+        <div class="track-item active" onclick="selectTrack(0,'Sunlit Gathering','ESFJ Community Choir')">
+          <span style="font-size:13px;">☀</span><span style="flex:1;">Sunlit Gathering</span><span style="font-size:11px;color:#4a3020;">4:18</span>
+        </div>
+        <div class="track-item" onclick="selectTrack(1,'Warm Table','Harmony Strings')">
+          <span style="font-size:13px;">🎉</span><span style="flex:1;">Warm Table</span><span style="font-size:11px;color:#4a3020;">3:52</span>
+        </div>
+        <div class="track-item" onclick="selectTrack(2,'Together Always','Coral Ensemble')">
+          <span style="font-size:13px;">💛</span><span style="flex:1;">Together Always</span><span style="font-size:11px;color:#4a3020;">5:07</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑮ PROJECTS -->
+    <section class="section-card reveal">
+      <p class="sec-label">Projects</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="project-card">
+          <div style="font-size:22px;margin-bottom:8px;">🏡</div>
+          <p style="font-size:13px;font-weight:700;color:#fde68a;">Consul's Table</p>
+          <p style="font-size:11px;color:#4a3020;margin-top:4px;line-height:1.5;">따뜻한 모임을 만드는 커뮤니티 가이드</p>
+          <span style="display:inline-block;margin-top:8px;font-size:10px;color:#34d399;border:1px solid rgba(52,211,153,0.3);padding:2px 8px;border-radius:999px;">Active</span>
+        </div>
+        <div class="project-card">
+          <div style="font-size:22px;margin-bottom:8px;">🌉</div>
+          <p style="font-size:13px;font-weight:700;color:#fde68a;">Bridge Network</p>
+          <p style="font-size:11px;color:#4a3020;margin-top:4px;line-height:1.5;">관계 회복과 갈등 중재 프로그램</p>
+          <span style="display:inline-block;margin-top:8px;font-size:10px;color:#38bdf8;border:1px solid rgba(56,189,248,0.3);padding:2px 8px;border-radius:999px;">Beta</span>
+        </div>
+        <div class="project-card">
+          <div style="font-size:22px;margin-bottom:8px;">🎊</div>
+          <p style="font-size:13px;font-weight:700;color:#fde68a;">Joy Planner</p>
+          <p style="font-size:11px;color:#4a3020;margin-top:4px;line-height:1.5;">모임과 행사 기획 도우미 플랫폼</p>
+          <span style="display:inline-block;margin-top:8px;font-size:10px;color:#fbbf24;border:1px solid rgba(251,191,36,0.3);padding:2px 8px;border-radius:999px;">New</span>
+        </div>
+        <div class="project-card">
+          <div style="font-size:22px;margin-bottom:8px;">💌</div>
+          <p style="font-size:13px;font-weight:700;color:#fde68a;">Care Letters</p>
+          <p style="font-size:11px;color:#4a3020;margin-top:4px;line-height:1.5;">마음을 전하는 손편지 구독 서비스</p>
+          <span style="display:inline-block;margin-top:8px;font-size:10px;color:#f87171;border:1px solid rgba(248,113,113,0.3);padding:2px 8px;border-radius:999px;">Open</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑯ MEMORY TIMELINE -->
+    <section class="section-card reveal">
+      <p class="sec-label">Community Log</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <p style="font-size:10px;color:#fbbf24;font-family:'DM Serif Display',serif;font-style:italic;letter-spacing:0.1em;">2024 봄</p>
+          <p style="font-size:13px;color:#f5ede0;font-weight:600;margin-top:2px;">Consul's Table Vol.1 론칭</p>
+          <p style="font-size:12px;color:#4a3020;margin-top:3px;line-height:1.65;">따뜻한 모임 문화를 만들기 위한 첫 커뮤니티 가이드. 출시 일주일 만에 5,000+ 다운로드.</p>
+        </div>
+        <div class="timeline-item">
+          <p style="font-size:10px;color:#f87171;font-family:'DM Serif Display',serif;font-style:italic;letter-spacing:0.1em;">2024 가을</p>
+          <p style="font-size:13px;color:#f5ede0;font-weight:600;margin-top:2px;">Bridge Network 베타 오픈</p>
+          <p style="font-size:12px;color:#4a3020;margin-top:3px;line-height:1.65;">갈등 중재와 관계 회복을 돕는 프로그램. 참여자 89%가 관계 개선을 경험.</p>
+        </div>
+        <div class="timeline-item" style="margin-bottom:0;">
+          <p style="font-size:10px;color:#34d399;font-family:'DM Serif Display',serif;font-style:italic;letter-spacing:0.1em;">2025 봄</p>
+          <p style="font-size:13px;color:#f5ede0;font-weight:600;margin-top:2px;">Joy Planner 플랫폼 출시 예정</p>
+          <p style="font-size:12px;color:#4a3020;margin-top:3px;line-height:1.65;">AI 기반 모임 기획 도우미와 커뮤니티 매칭 기능을 결합한 차세대 플랫폼.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑰ RECENT POSTS -->
+    <section class="section-card reveal">
+      <p class="sec-label">Recent Posts</p>
+      <div style="display:flex;flex-direction:column;gap:13px;">
+        <div style="border-bottom:1px solid rgba(251,191,36,0.1);padding-bottom:13px;">
+          <div style="display:flex;gap:5px;margin-bottom:6px;">
+            <span class="tag" style="border-color:rgba(251,191,36,0.4);color:#fde68a;background:rgba(251,191,36,0.09);font-size:10px;">#집정관</span>
+            <span class="tag" style="border-color:rgba(52,211,153,0.36);color:#6ee7b7;background:rgba(52,211,153,0.07);font-size:10px;">#공동체</span>
+          </div>
+          <p style="font-size:14px;font-weight:600;color:#f5ede0;line-height:1.5;font-family:'DM Serif Display',serif;">ESFJ가 모든 사람을 기억하는 이유 — 관계의 기술</p>
+          <p style="font-size:11px;color:#4a3020;margin-top:4px;">2025.12.15 · 7분 읽기</p>
+        </div>
+        <div style="border-bottom:1px solid rgba(251,191,36,0.1);padding-bottom:13px;">
+          <div style="display:flex;gap:5px;margin-bottom:6px;">
+            <span class="tag" style="border-color:rgba(248,113,113,0.38);color:#fca5a5;background:rgba(248,113,113,0.08);font-size:10px;">#배려</span>
+            <span class="tag" style="border-color:rgba(56,189,248,0.36);color:#7dd3fc;background:rgba(56,189,248,0.07);font-size:10px;">#조화</span>
+          </div>
+          <p style="font-size:14px;font-weight:600;color:#f5ede0;line-height:1.5;font-family:'DM Serif Display',serif;">집정관형의 경계 설정 — 베풀되 소진되지 않는 법</p>
+          <p style="font-size:11px;color:#4a3020;margin-top:4px;">2025.11.29 · 6분 읽기</p>
+        </div>
+        <div>
+          <div style="display:flex;gap:5px;margin-bottom:6px;">
+            <span class="tag" style="border-color:rgba(251,191,36,0.4);color:#fde68a;background:rgba(251,191,36,0.09);font-size:10px;">#MBTI</span>
+            <span class="tag" style="border-color:rgba(52,211,153,0.36);color:#6ee7b7;background:rgba(52,211,153,0.07);font-size:10px;">#관계</span>
+          </div>
+          <p style="font-size:14px;font-weight:600;color:#f5ede0;line-height:1.5;font-family:'DM Serif Display',serif;">ESFJ로 산다는 것 — 세상의 연결고리가 된다는 것</p>
+          <p style="font-size:11px;color:#4a3020;margin-top:4px;">2025.11.11 · 5분 읽기</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑱ FAQ -->
+    <section class="section-card reveal">
+      <p class="sec-label">FAQ</p>
+      <details>
+        <summary>ESFJ는 어떤 성격 유형인가요?</summary>
+        <p>ESFJ는 Myers-Briggs 유형 중 "집정관형" 또는 "영사형"으로 불립니다. 외향적(E), 감각형(S), 감정형(F), 판단형(J) 특성을 지니며, 따뜻한 사교성과 강한 책임감으로 공동체를 하나로 묶는 타고난 연결자입니다. 전 세계 인구의 약 9~13%를 차지하는 가장 흔한 유형 중 하나입니다.</p>
+      </details>
+      <details>
+        <summary>ESFJ의 핵심 강점은 무엇인가요?</summary>
+        <p>ESFJ는 탁월한 사교성과 공감 능력으로 모든 사람이 환영받는다고 느끼게 만드는 능력이 있습니다. 실용적인 돌봄과 세심한 배려로 주변 사람들의 필요를 먼저 파악하고, 갈등을 조화롭게 해결하는 중재자 역할을 합니다. 또한 전통과 공동체 가치를 중시하며, 조직과 관계에서 없어서는 안 될 중심 역할을 합니다.</p>
+      </details>
+      <details>
+        <summary>esfj.kr에서 무엇을 찾을 수 있나요?</summary>
+        <p>esfj.kr은 ESFJ 성격 유형에 대한 따뜻한 시각의 심층 분석과 집정관형이 더 건강하게 관계를 맺는 방법을 제공합니다. 커뮤니티 활동, 모임 기획 가이드, 그리고 ESFJ들이 모여 서로의 이야기를 나누고 함께 성장하는 공동체 공간입니다.</p>
+      </details>
+    </section>
+
+    <!-- ⑲ NEWSLETTER -->
+    <section class="section-card reveal" style="border-color:rgba(52,211,153,0.2);background:rgba(52,211,153,0.04);">
+      <p class="sec-label">Newsletter</p>
+      <p style="font-size:14px;color:#f5ede0;margin-bottom:15px;line-height:1.7;">집정관의 따뜻한 소식을 매주 받아보세요. 커뮤니티, 관계, 그리고 함께 만드는 세상 이야기.</p>
+      <div style="display:flex;gap:8px;">
+        <input type="email" id="newsletterEmail" class="form-input" placeholder="your@email.com" style="margin-bottom:0;flex:1;" />
+        <button onclick="handleNewsletter()" class="btn-submit" style="width:auto;padding:11px 16px;white-space:nowrap;">구독</button>
+      </div>
+      <p id="newsletterMsg" style="font-size:12px;margin-top:7px;color:#34d399;display:none;">☀ 구독 완료 — 따뜻한 소식 함께 나눠요!</p>
+    </section>
+
+    <!-- ⑳ CONTACT -->
+    <section class="section-card reveal">
+      <p class="sec-label">Contact</p>
+      <input type="text"  id="contactName"    class="form-input" placeholder="이름 (Name)" />
+      <input type="email" id="contactEmail"   class="form-input" placeholder="이메일 (Email)" />
+      <select             id="contactTopic"   class="form-input">
+        <option value="">문의 유형 선택</option>
+        <option value="community">커뮤니티 참여 문의</option>
+        <option value="event">모임 기획 협업</option>
+        <option value="counsel">관계 상담 요청</option>
+        <option value="media">인터뷰 / 강연 요청</option>
+        <option value="etc">기타 문의</option>
+      </select>
+      <textarea id="contactMessage" class="form-input" rows="4" placeholder="따뜻하게 전하고 싶은 말을 적어주세요…" style="resize:none;"></textarea>
+      <button onclick="handleContact()" class="btn-submit">마음 전하기 ☀</button>
+      <p id="contactMsg" style="font-size:12px;margin-top:8px;color:#34d399;text-align:center;display:none;">☀ 소중한 메시지 받았습니다. 곧 따뜻하게 답장할게요!</p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="reveal" style="text-align:center;padding:18px 0 40px;">
+      <div class="sun-divider" style="margin-bottom:18px;"></div>
+      <div style="margin-bottom:13px;">
+        <span class="tag" style="border-color:rgba(251,191,36,0.42);color:#fde68a;background:rgba(251,191,36,0.09);">#ESFJ</span>
+        <span class="tag" style="border-color:rgba(248,113,113,0.4);color:#fca5a5;background:rgba(248,113,113,0.08);">#집정관형</span>
+        <span class="tag" style="border-color:rgba(56,189,248,0.38);color:#7dd3fc;background:rgba(56,189,248,0.07);">#공동체</span>
+        <span class="tag" style="border-color:rgba(52,211,153,0.36);color:#6ee7b7;background:rgba(52,211,153,0.07);">#MBTI</span>
+        <span class="tag" style="border-color:rgba(251,191,36,0.3);color:#fde68a;background:rgba(251,191,36,0.07);">#따뜻함</span>
+      </div>
+      <p style="font-size:12px;color:#4a3020;margin-bottom:8px;font-style:italic;font-family:'DM Serif Display',serif;">"세상을 따뜻하게 만드는 건 한 사람의 큰 행동이 아니라, 수천 개의 작은 친절입니다."</p>
+      <a href="https://esfj.kr" style="font-size:16px;color:#fbbf24;font-weight:700;text-decoration:none;letter-spacing:0.1em;font-family:'DM Serif Display',serif;">esfj.kr</a>
+      <p style="font-size:10px;color:#1a0d0e;margin-top:10px;">© 2025 esfj.kr · Made with warmth for community builders</p>
+    </footer>
+
+  </main>
+
+  <script>
+    // ── Confetti Particles ────────────────────────────────────────
+    (function createParticles() {
+      const layer  = document.getElementById('particle-layer');
+      const colors = ['#fbbf24','#f87171','#38bdf8','#34d399','#fde68a','#fca5a5','#7dd3fc','#6ee7b7'];
+      const shapes = ['●', '■', '▲', '★', '♥', '✦'];
+      for (let i = 0; i < 50; i++) {
+        const p     = document.createElement('div');
+        p.className = 'particle';
+        const size  = Math.random() * 8 + 5;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        const dx    = (Math.random() - 0.5) * 80;
+        const dx2   = (Math.random() - 0.5) * 60;
+        p.textContent = shape;
+        p.style.cssText = `
+          left:${Math.random() * 100}%;
+          top:-5vh;
+          font-size:${size}px;
+          color:${color};
+          --dur:${8 + Math.random() * 12}s;
+          --delay:${Math.random() * 12}s;
+          --dx:${dx}px;
+          --dx2:${dx2}px;
+          text-shadow:0 0 ${size}px ${color}66;
+        `;
+        layer.appendChild(p);
+      }
+    })();
+
+    // ── Community Meter ───────────────────────────────────────────
+    (function buildCommunityMeter() {
+      const meter = document.getElementById('communityMeter');
+      for (let i = 0; i < 17; i++) {
+        const s     = document.createElement('div');
+        s.className = 'community-seg';
+        s.dataset.idx = i;
+        meter.appendChild(s);
+      }
+    })();
+
+    // ── Scroll Reveal & Animations ────────────────────────────────
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('visible');
+
+        // Progress bars
+        e.target.querySelectorAll('.progress-fill[data-width]').forEach(bar => {
+          setTimeout(() => { bar.style.width = bar.dataset.width + '%'; }, 200);
+        });
+
+        // Count-up labels
+        e.target.querySelectorAll('[data-target]').forEach(el => {
+          const target = parseInt(el.dataset.target);
+          let cur = 0;
+          const step = () => {
+            cur += 2;
+            if (cur >= target) { el.textContent = target + '%'; return; }
+            el.textContent = cur + '%';
+            setTimeout(step, 18);
+          };
+          setTimeout(step, 200);
+        });
+
+        // Community Meter
+        if (e.target.querySelector('#communityMeter')) {
+          document.querySelectorAll('.community-seg').forEach((s, i) => {
+            setTimeout(() => s.classList.add('lit'), 100 + i * 95);
+          });
+        }
+      });
+    }, { threshold: 0.13 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // ── Carousel ──────────────────────────────────────────────────
+    let carouselIndex = 0;
+    const TOTAL = 5;
+    const track = document.getElementById('carouselTrack');
+    const dots  = document.querySelectorAll('.carousel-dot');
+
+    function goToSlide(n) {
+      carouselIndex = (n + TOTAL) % TOTAL;
+      track.style.transform = `translateX(-${carouselIndex * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('active', i === carouselIndex));
+    }
+
+    document.getElementById('carouselPrev').addEventListener('click', () => goToSlide(carouselIndex - 1));
+    document.getElementById('carouselNext').addEventListener('click', () => goToSlide(carouselIndex + 1));
+    dots.forEach(d => d.addEventListener('click', () => goToSlide(+d.dataset.index)));
+
+    let touchStartX = 0;
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) goToSlide(carouselIndex + (dx < 0 ? 1 : -1));
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft')  goToSlide(carouselIndex - 1);
+      if (e.key === 'ArrowRight') goToSlide(carouselIndex + 1);
+    });
+
+    let carouselTimer = setInterval(() => goToSlide(carouselIndex + 1), 5200);
+    track.parentElement.addEventListener('mouseenter', () => clearInterval(carouselTimer));
+    track.parentElement.addEventListener('mouseleave', () => {
+      clearInterval(carouselTimer);
+      carouselTimer = setInterval(() => goToSlide(carouselIndex + 1), 5200);
+    });
+
+    // ── Music Player ──────────────────────────────────────────────
+    let isPlaying    = false;
+    let musicInterval = null;
+    let musicProgress = 0;
+
+    function toggleMusic() {
+      isPlaying = !isPlaying;
+      const vinyl = document.getElementById('vinyl');
+      const btn   = document.getElementById('playBtn');
+      if (isPlaying) {
+        vinyl.classList.add('playing');
+        btn.textContent = '⏸';
+        musicInterval = setInterval(() => {
+          musicProgress = (musicProgress + 0.039) % 100;
+          document.getElementById('musicProgress').style.width = musicProgress + '%';
+          const totalSec = 258;
+          const cur = Math.floor(musicProgress / 100 * totalSec);
+          document.getElementById('currentTime').textContent =
+            Math.floor(cur / 60) + ':' + String(cur % 60).padStart(2, '0');
+        }, 100);
+      } else {
+        vinyl.classList.remove('playing');
+        btn.textContent = '▶';
+        clearInterval(musicInterval);
+      }
+    }
+
+    function selectTrack(idx, title, artist) {
+      musicProgress = 0;
+      document.getElementById('trackTitle').textContent  = title;
+      document.getElementById('trackArtist').textContent = artist;
+      document.getElementById('musicProgress').style.width = '0%';
+      document.getElementById('currentTime').textContent  = '0:00';
+      document.querySelectorAll('.track-item').forEach((item, i) => {
+        item.classList.toggle('active', i === idx);
+      });
+      if (isPlaying) { clearInterval(musicInterval); isPlaying = false; }
+      toggleMusic();
+    }
+
+    // ── Scroll-to-top ─────────────────────────────────────────────
+    const scrollTopBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      scrollTopBtn.classList.toggle('show', window.scrollY > 380);
+    });
+
+    // ── Newsletter ────────────────────────────────────────────────
+    function handleNewsletter() {
+      const email = document.getElementById('newsletterEmail').value.trim();
+      const msg   = document.getElementById('newsletterMsg');
+      if (!email || !email.includes('@')) {
+        msg.style.color   = '#ef4444';
+        msg.textContent   = '✗ 올바른 이메일 주소를 입력해주세요.';
+        msg.style.display = 'block';
+        return;
+      }
+      msg.style.color   = '#34d399';
+      msg.textContent   = '☀ 구독 완료 — 따뜻한 소식 함께 나눠요!';
+      msg.style.display = 'block';
+      document.getElementById('newsletterEmail').value = '';
+    }
+
+    // ── Contact Form ──────────────────────────────────────────────
+    function handleContact() {
+      const name    = document.getElementById('contactName').value.trim();
+      const email   = document.getElementById('contactEmail').value.trim();
+      const message = document.getElementById('contactMessage').value.trim();
+      const msg     = document.getElementById('contactMsg');
+      if (!name || !email || !message) {
+        msg.style.color   = '#ef4444';
+        msg.textContent   = '✗ 이름, 이메일, 메시지를 모두 입력해주세요.';
+        msg.style.display = 'block';
+        return;
+      }
+      if (!email.includes('@')) {
+        msg.style.color   = '#ef4444';
+        msg.textContent   = '✗ 올바른 이메일 주소를 입력해주세요.';
+        msg.style.display = 'block';
+        return;
+      }
+      msg.style.color   = '#34d399';
+      msg.textContent   = '☀ 소중한 메시지 받았습니다. 곧 따뜻하게 답장할게요!';
+      msg.style.display = 'block';
+      ['contactName','contactEmail','contactTopic','contactMessage'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+    }
+  </script>
+</body>
+</html>
