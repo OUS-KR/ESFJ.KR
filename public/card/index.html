@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>esfj.kr</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;min-height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0b0809}
+
+/* background orbs */
+.bg-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0}
+.bg-orb-1{width:680px;height:500px;top:-200px;left:-160px;background:radial-gradient(ellipse,rgba(220,120,80,0.17)0%,transparent 70%)}
+.bg-orb-2{width:540px;height:540px;bottom:-200px;right:-140px;background:radial-gradient(ellipse,rgba(240,170,80,0.14)0%,transparent 70%)}
+.bg-orb-3{width:420px;height:320px;top:40%;left:55%;background:radial-gradient(ellipse,rgba(210,100,110,0.10)0%,transparent 70%)}
+.bg-orb-4{width:340px;height:260px;bottom:10%;left:10%;background:radial-gradient(ellipse,rgba(240,190,100,0.08)0%,transparent 70%)}
+.bg-orb-5{width:280px;height:200px;top:20%;right:15%;background:radial-gradient(ellipse,rgba(220,140,90,0.07)0%,transparent 70%)}
+.bg-orb-6{width:220px;height:180px;bottom:30%;right:30%;background:radial-gradient(ellipse,rgba(200,110,80,0.06)0%,transparent 70%)}
+
+/* petal dust field */
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(circle,rgba(240,180,120,0.055) 1px,transparent 1px) 0 0/48px 48px,
+    radial-gradient(circle,rgba(220,130,90,0.040) 1px,transparent 1px) 24px 24px/60px 60px,
+    radial-gradient(circle,rgba(240,200,140,0.030) 1px,transparent 1px) 12px 12px/80px 80px}
+
+/* scene */
+.scene{perspective:900px;position:relative;z-index:1}
+
+/* card wrap */
+.card-wrap{
+  width:380px;height:240px;position:relative;
+  transform-style:preserve-3d;border-radius:16px;cursor:pointer;
+  animation:card-enter 1.2s cubic-bezier(.16,1.4,.36,1) both
+}
+@keyframes card-enter{
+  from{opacity:0;transform:rotateX(-8deg) rotateY(25deg) scale(.82) translateX(16px);filter:blur(8px) brightness(1.9)}
+  to{opacity:1;transform:none;filter:none}
+}
+.card-wrap.is-idle{animation:card-enter 1.2s cubic-bezier(.16,1.4,.36,1) both,float-idle 9s ease-in-out 1.2s infinite}
+@keyframes float-idle{
+  0%,100%{transform:rotateX(3.5deg) rotateY(-4deg) translateY(0)}
+  25%{transform:rotateX(-3deg) rotateY(4.5deg) translateY(-8px)}
+  55%{transform:rotateX(2.5deg) rotateY(-2.5deg) translateY(-5px)}
+  75%{transform:rotateX(-2deg) rotateY(4deg) translateY(-7px)}
+}
+
+/* holographic overlay */
+.card-holo{
+  position:absolute;inset:0;border-radius:16px;z-index:8;pointer-events:none;opacity:0;
+  background:conic-gradient(from var(--r,0deg) at var(--mx,50%) var(--my,50%),
+    rgba(255,200,120,0.22) 0deg,rgba(240,140,80,0.14) 60deg,
+    rgba(255,220,160,0.20) 120deg,rgba(210,120,70,0.12) 180deg,
+    rgba(255,200,110,0.18) 240deg,rgba(240,160,90,0.15) 300deg,
+    rgba(255,200,120,0.22) 360deg);
+  mix-blend-mode:screen;transition:opacity .3s
+}
+.card-wrap:hover .card-holo{opacity:1}
+
+/* spotlight */
+.card-spot{
+  position:absolute;inset:0;border-radius:16px;z-index:7;pointer-events:none;opacity:0;
+  background:radial-gradient(ellipse 160px 110px at var(--mx,50%) var(--my,50%),rgba(255,210,140,0.18) 0%,transparent 70%);
+  transition:opacity .3s
+}
+.card-wrap:hover .card-spot{opacity:1}
+
+/* shimmer */
+.card-shimmer{
+  position:absolute;inset:0;border-radius:16px;z-index:6;pointer-events:none;overflow:hidden
+}
+.card-shimmer::before,.card-shimmer::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 30%,rgba(255,210,140,0.18) 50%,transparent 70%);
+  animation:warmth-sweep 6s ease-in-out infinite
+}
+.card-shimmer::after{animation-delay:3s;background:linear-gradient(115deg,transparent 30%,rgba(240,160,90,0.12) 50%,transparent 70%)}
+@keyframes warmth-sweep{
+  0%{transform:translateX(-120%) skewX(-12deg)}
+  60%,100%{transform:translateX(220%) skewX(-12deg)}
+}
+
+/* card texture */
+.card-texture{
+  position:absolute;inset:0;border-radius:16px;z-index:5;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Ccircle cx='40' cy='40' r='0.7' fill='rgba(255,200,140,0.08)'/%3E%3C/svg%3E") repeat;
+  opacity:.7
+}
+
+/* card edge */
+.card-edge{
+  position:absolute;inset:0;border-radius:16px;z-index:9;pointer-events:none;
+  box-shadow:inset 0 1px 0 rgba(255,210,150,0.55),inset 0 -1px 0 rgba(180,90,50,0.22),inset 1px 0 0 rgba(255,200,130,0.20),inset -1px 0 0 rgba(180,90,50,0.18)
+}
+
+/* main card */
+.card{
+  width:100%;height:100%;border-radius:16px;overflow:hidden;position:relative;
+  background:linear-gradient(130deg,rgba(220,110,70,0.20) 0%,rgba(160,70,40,0.10) 28%,rgba(240,160,80,0.16) 58%,rgba(190,90,60,0.12) 100%);
+  backdrop-filter:blur(22px) saturate(180%) brightness(1.10);
+  border:1px solid rgba(240,160,90,0.30);
+  box-shadow:0 38px 80px rgba(8,3,3,.70),0 10px 26px rgba(8,3,3,.50),inset 0 1px 0 rgba(255,200,130,0.50),inset 0 2px 8px rgba(220,130,70,0.12)
+}
+
+/* card inner art */
+.card-inner-art{position:absolute;inset:0;z-index:1;pointer-events:none}
+
+/* petal container */
+#petalContainer{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden;border-radius:16px}
+.petal{position:absolute;border-radius:50% 0 50% 0;animation:petal-float linear infinite;opacity:0}
+@keyframes petal-float{
+  0%{opacity:0;transform:translateY(0) translateX(0) rotate(0deg) scale(.6)}
+  10%{opacity:.85}
+  80%{opacity:.60}
+  100%{opacity:0;transform:translateY(var(--py,-70px)) translateX(var(--px,12px)) rotate(var(--pr,180deg)) scale(1)}
+}
+
+/* letter tag */
+.letter-tag{
+  position:absolute;top:14px;left:16px;z-index:10;display:flex;gap:4px
+}
+.letter-tag .lt{
+  font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+  color:rgba(255,210,150,0.92);
+  text-shadow:0 0 8px rgba(240,160,80,0.60);
+  line-height:1
+}
+.letter-tag .lt-word{
+  font-size:6.5px;font-weight:500;letter-spacing:.04em;
+  color:rgba(255,185,120,0.55);margin-top:2px;
+  text-transform:uppercase
+}
+.letter-tag .lt-col{display:flex;flex-direction:column;align-items:center;gap:1px}
+
+/* hover meaning overlay */
+.card-meanings{
+  position:absolute;inset:0;z-index:11;display:flex;align-items:center;justify-content:center;
+  gap:22px;opacity:0;pointer-events:none;transition:opacity .35s;
+  background:rgba(11,8,9,.55);backdrop-filter:blur(4px) saturate(130%);border-radius:16px
+}
+.card-wrap:hover .card-meanings{opacity:1}
+.meaning-item{display:flex;flex-direction:column;align-items:center;gap:5px}
+.meaning-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(240,160,80,0.22);border:1px solid rgba(240,160,80,0.35)}
+.meaning-label{font-size:6.8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,200,140,0.80)}
+
+/* divider lines */
+.card-vline{position:absolute;top:18px;bottom:18px;left:50%;width:1px;background:linear-gradient(to bottom,transparent,rgba(240,160,80,0.20) 30%,rgba(240,160,80,0.20) 70%,transparent);z-index:2;pointer-events:none}
+.card-hline{position:absolute;left:18px;right:18px;top:50%;height:1px;background:linear-gradient(to right,transparent,rgba(240,160,80,0.14) 30%,rgba(240,160,80,0.14) 70%,transparent);z-index:2;pointer-events:none}
+
+/* card content */
+.card-content{position:absolute;inset:0;z-index:10;display:flex;align-items:flex-end;padding:14px 18px;pointer-events:none}
+.card-name{flex:1}
+.name-main{font-size:22px;font-weight:900;letter-spacing:-.02em;color:rgba(255,220,160,0.95);line-height:1;text-shadow:0 0 18px rgba(240,160,80,0.50)}
+.name-dot{color:rgba(240,150,70,0.80)}
+.name-sub{font-size:8px;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:rgba(255,185,120,0.55);margin-top:3px}
+.card-meta{position:absolute;top:18px;right:18px;display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+.meta-row{font-size:6.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:rgba(255,190,120,0.50)}
+.card-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;margin-left:10px}
+.badge{display:flex;align-items:center;gap:4px;background:rgba(220,120,60,0.22);border:1px solid rgba(240,160,80,0.35);border-radius:6px;padding:3px 8px}
+.badge-glyph{font-size:11px}
+.badge-label{font-size:9px;font-weight:800;letter-spacing:.10em;color:rgba(255,210,140,0.92)}
+.domain-url{font-size:8.5px;font-weight:700;letter-spacing:.06em;color:rgba(255,185,110,0.55)}
+.domain-tld{color:rgba(240,150,70,0.75)}
+
+/* SVG animations */
+@keyframes heart-beat{0%,100%{transform:scale(1)}40%{transform:scale(1.12)}70%{transform:scale(1.05)}}
+@keyframes ring-expand{0%{transform:scale(.5);opacity:.80}100%{transform:scale(1.5);opacity:0}}
+@keyframes petal-bloom{0%{transform:scale(0) rotate(-30deg);opacity:0}100%{transform:scale(1) rotate(0deg);opacity:1}}
+@keyframes hand-reach{0%{opacity:0;transform:translateY(6px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes net-draw{0%{stroke-dashoffset:120}100%{stroke-dashoffset:0}}
+@keyframes node-pulse{0%,100%{r:2.5;opacity:.85}50%{r:3.5;opacity:1}}
+@keyframes sun-rise{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes warmth-glow{0%,100%{opacity:.60}50%{opacity:1}}
+</style>
+</head>
+<body>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<div class="bg-orb bg-orb-3"></div>
+<div class="bg-orb bg-orb-4"></div>
+<div class="bg-orb bg-orb-5"></div>
+<div class="bg-orb bg-orb-6"></div>
+
+<div class="scene">
+  <div class="card-wrap is-idle" id="cardWrap">
+    <div class="card-holo" id="cardHolo"></div>
+    <div class="card-spot" id="cardSpot"></div>
+    <div class="card-shimmer"></div>
+    <div class="card-texture"></div>
+    <div class="card-edge"></div>
+
+    <div class="card" id="cardFace">
+      <!-- SVG Art Layer -->
+      <div class="card-inner-art">
+        <svg width="380" height="240" viewBox="0 0 380 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="rg-warm" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(255,200,120,0.30)"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </radialGradient>
+            <radialGradient id="rg-heart" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="rgba(240,130,100,0.90)"/>
+              <stop offset="100%" stop-color="rgba(200,80,60,0.60)"/>
+            </radialGradient>
+            <radialGradient id="rg-sun" cx="50%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="rgba(255,220,140,0.22)"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </radialGradient>
+            <filter id="f-warm-glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="f-soft-glow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="9" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <clipPath id="card-clip">
+              <rect width="380" height="240" rx="16"/>
+            </clipPath>
+          </defs>
+
+          <g clip-path="url(#card-clip)">
+            <!-- ambient warm background -->
+            <ellipse cx="130" cy="90" rx="160" ry="110" fill="url(#rg-warm)" opacity=".45"/>
+            <ellipse cx="300" cy="170" rx="120" ry="80" fill="url(#rg-sun)" opacity=".40"/>
+
+            <!-- community network nodes & connections -->
+            <!-- connection lines -->
+            <line x1="100" y1="90" x2="155" y2="118" stroke="rgba(240,170,90,0.28)" stroke-width="1"
+              stroke-dasharray="120" stroke-dashoffset="120"
+              style="animation:net-draw 1.2s ease-out 3.2s both"/>
+            <line x1="210" y1="118" x2="265" y2="90" stroke="rgba(240,170,90,0.28)" stroke-width="1"
+              stroke-dasharray="120" stroke-dashoffset="120"
+              style="animation:net-draw 1.2s ease-out 3.4s both"/>
+            <line x1="155" y1="118" x2="210" y2="118" stroke="rgba(240,170,90,0.32)" stroke-width="1.2"
+              stroke-dasharray="120" stroke-dashoffset="120"
+              style="animation:net-draw 1.0s ease-out 3.0s both"/>
+            <line x1="182" y1="118" x2="182" y2="168" stroke="rgba(240,170,90,0.24)" stroke-width="1"
+              stroke-dasharray="80" stroke-dashoffset="80"
+              style="animation:net-draw 1.0s ease-out 3.6s both"/>
+            <line x1="100" y1="90" x2="182" y2="118" stroke="rgba(240,150,80,0.18)" stroke-width=".8"
+              stroke-dasharray="120" stroke-dashoffset="120"
+              style="animation:net-draw 1.1s ease-out 3.8s both"/>
+            <line x1="265" y1="90" x2="182" y2="118" stroke="rgba(240,150,80,0.18)" stroke-width=".8"
+              stroke-dasharray="120" stroke-dashoffset="120"
+              style="animation:net-draw 1.1s ease-out 4.0s both"/>
+
+            <!-- community member nodes -->
+            <circle cx="100" cy="90" r="2.5" fill="rgba(255,190,110,0.82)" filter="url(#f-warm-glow)"
+              style="animation:node-pulse 2.8s ease-in-out 3.2s infinite"/>
+            <circle cx="265" cy="90" r="2.5" fill="rgba(255,190,110,0.82)" filter="url(#f-warm-glow)"
+              style="animation:node-pulse 2.8s ease-in-out 3.5s infinite"/>
+            <circle cx="155" cy="118" r="2.2" fill="rgba(240,160,90,0.75)"
+              style="animation:node-pulse 2.6s ease-in-out 3.8s infinite"/>
+            <circle cx="210" cy="118" r="2.2" fill="rgba(240,160,90,0.75)"
+              style="animation:node-pulse 2.6s ease-in-out 4.0s infinite"/>
+            <circle cx="182" cy="168" r="2.8" fill="rgba(255,200,120,0.80)" filter="url(#f-warm-glow)"
+              style="animation:node-pulse 3.0s ease-in-out 4.2s infinite"/>
+
+            <!-- central heart (consul / caregiver) -->
+            <g transform="translate(182,118)" filter="url(#f-soft-glow)"
+              style="animation:heart-beat 2.4s ease-in-out 2.0s infinite;transform-origin:0px 0px">
+              <!-- heart path scaled and centered -->
+              <path d="M0,-7 C0,-7 -9,-14 -14,-7 C-19,0 -9,8 0,16 C9,8 19,0 14,-7 C9,-14 0,-7 0,-7 Z"
+                fill="rgba(235,110,90,0.88)" stroke="rgba(255,180,140,0.60)" stroke-width=".8"/>
+            </g>
+            <!-- heart glow rings -->
+            <circle cx="182" cy="116" r="18" stroke="rgba(240,130,90,0.28)" stroke-width="1" fill="none"
+              style="animation:ring-expand 2.4s ease-out 2.5s infinite"/>
+            <circle cx="182" cy="116" r="18" stroke="rgba(240,130,90,0.18)" stroke-width=".8" fill="none"
+              style="animation:ring-expand 2.4s ease-out 3.2s infinite"/>
+
+            <!-- warm sun arc (top, symbolizing warmth) -->
+            <path d="M 90,50 A 120,120 0 0 1 290,50"
+              stroke="rgba(255,210,130,0.22)" stroke-width="1.4" fill="none"
+              stroke-dasharray="6 5"
+              style="animation:sun-rise 1.2s ease-out 2.2s both"/>
+            <!-- sun rays (short marks along arc) -->
+            <g stroke="rgba(255,200,120,0.30)" stroke-width="1" style="animation:sun-rise 1.0s ease-out 2.4s both">
+              <line x1="128" y1="28" x2="122" y2="20"/>
+              <line x1="155" y1="18" x2="153" y2="10"/>
+              <line x1="182" y1="14" x2="182" y2="6"/>
+              <line x1="210" y1="18" x2="212" y2="10"/>
+              <line x1="236" y1="28" x2="242" y2="20"/>
+            </g>
+
+            <!-- blooming flower petals (bottom-left accent) -->
+            <g transform="translate(64,178)" style="animation:petal-bloom 1.0s ease-out 2.6s both;transform-origin:0px 0px">
+              <ellipse cx="0" cy="-9"  rx="3.5" ry="6" fill="rgba(230,130,100,0.55)" transform="rotate(0)"/>
+              <ellipse cx="0" cy="-9"  rx="3.5" ry="6" fill="rgba(240,160,100,0.50)" transform="rotate(45)"/>
+              <ellipse cx="0" cy="-9"  rx="3.5" ry="6" fill="rgba(255,190,110,0.45)" transform="rotate(90)"/>
+              <ellipse cx="0" cy="-9"  rx="3.5" ry="6" fill="rgba(240,160,100,0.50)" transform="rotate(135)"/>
+              <ellipse cx="0" cy="-9"  rx="3.5" ry="6" fill="rgba(230,130,100,0.55)" transform="rotate(180)"/>
+              <ellipse cx="0" cy="-9"  rx="3.5" ry="6" fill="rgba(240,160,100,0.50)" transform="rotate(225)"/>
+              <ellipse cx="0" cy="-9"  rx="3.5" ry="6" fill="rgba(255,190,110,0.45)" transform="rotate(270)"/>
+              <ellipse cx="0" cy="-9"  rx="3.5" ry="6" fill="rgba(240,160,100,0.50)" transform="rotate(315)"/>
+              <circle cx="0" cy="0" r="4" fill="rgba(255,220,140,0.80)"/>
+            </g>
+            <!-- second smaller flower -->
+            <g transform="translate(310,52)" style="animation:petal-bloom 1.0s ease-out 3.0s both;transform-origin:0px 0px">
+              <ellipse cx="0" cy="-6"  rx="2.5" ry="4.5" fill="rgba(240,150,100,0.45)" transform="rotate(0)"/>
+              <ellipse cx="0" cy="-6"  rx="2.5" ry="4.5" fill="rgba(255,180,110,0.40)" transform="rotate(60)"/>
+              <ellipse cx="0" cy="-6"  rx="2.5" ry="4.5" fill="rgba(240,150,100,0.45)" transform="rotate(120)"/>
+              <ellipse cx="0" cy="-6"  rx="2.5" ry="4.5" fill="rgba(255,180,110,0.40)" transform="rotate(180)"/>
+              <ellipse cx="0" cy="-6"  rx="2.5" ry="4.5" fill="rgba(240,150,100,0.45)" transform="rotate(240)"/>
+              <ellipse cx="0" cy="-6"  rx="2.5" ry="4.5" fill="rgba(255,180,110,0.40)" transform="rotate(300)"/>
+              <circle cx="0" cy="0" r="3" fill="rgba(255,215,130,0.75)"/>
+            </g>
+
+            <!-- reaching hands (Extrovert / caring gesture) -->
+            <g style="animation:hand-reach 1.0s ease-out 2.8s both">
+              <!-- left hand -->
+              <path d="M 50,148 Q 60,138 70,140 Q 80,142 82,152 Q 84,162 74,165 Q 64,168 56,162 Z"
+                fill="rgba(220,150,100,0.22)" stroke="rgba(240,170,110,0.35)" stroke-width=".8"/>
+              <!-- right hand mirror -->
+              <path d="M 330,148 Q 320,138 310,140 Q 300,142 298,152 Q 296,162 306,165 Q 316,168 324,162 Z"
+                fill="rgba(220,150,100,0.22)" stroke="rgba(240,170,110,0.35)" stroke-width=".8"/>
+            </g>
+
+            <!-- warmth scale bars (bottom-right) -->
+            <g style="animation:sun-rise 1.0s ease-out 3.4s both">
+              <text x="248" y="164" font-family="Inter,sans-serif" font-size="5.5" font-weight="700"
+                fill="rgba(255,190,110,0.55)" letter-spacing=".06em">EMPATHY</text>
+              <rect x="248" y="167" width="70" height="3.5" rx="1.5" fill="rgba(255,160,80,0.12)"/>
+              <rect x="248" y="167" width="64" height="3.5" rx="1.5" fill="rgba(255,160,80,0.55)"
+                style="animation:net-draw 1.2s ease-out 3.6s both;stroke-dasharray:none"/>
+
+              <text x="248" y="178" font-family="Inter,sans-serif" font-size="5.5" font-weight="700"
+                fill="rgba(255,190,110,0.55)" letter-spacing=".06em">HARMONY</text>
+              <rect x="248" y="181" width="70" height="3.5" rx="1.5" fill="rgba(255,160,80,0.12)"/>
+              <rect x="248" y="181" width="58" height="3.5" rx="1.5" fill="rgba(255,160,80,0.48)"
+                style="animation:net-draw 1.2s ease-out 3.8s both;stroke-dasharray:none"/>
+
+              <text x="248" y="192" font-family="Inter,sans-serif" font-size="5.5" font-weight="700"
+                fill="rgba(255,190,110,0.55)" letter-spacing=".06em">LOYALTY</text>
+              <rect x="248" y="195" width="70" height="3.5" rx="1.5" fill="rgba(255,160,80,0.12)"/>
+              <rect x="248" y="195" width="52" height="3.5" rx="1.5" fill="rgba(255,160,80,0.42)"
+                style="animation:net-draw 1.2s ease-out 4.0s both;stroke-dasharray:none"/>
+            </g>
+
+            <!-- registration corners -->
+            <g stroke="rgba(240,160,80,0.30)" stroke-width=".8" fill="none">
+              <path d="M 14,14 L 14,22 M 14,14 L 22,14"/>
+              <path d="M 366,14 L 366,22 M 366,14 L 358,14"/>
+              <path d="M 14,226 L 14,218 M 14,226 L 22,226"/>
+              <path d="M 366,226 L 366,218 M 366,226 L 358,226"/>
+            </g>
+            <!-- bottom dimension line -->
+            <g style="animation:sun-rise 1.0s ease-out 3.6s both">
+              <line x1="60" y1="228" x2="320" y2="228" stroke="rgba(240,160,80,0.22)" stroke-width=".8"/>
+              <line x1="60" y1="225" x2="60" y2="231" stroke="rgba(240,160,80,0.22)" stroke-width=".8"/>
+              <line x1="320" y1="225" x2="320" y2="231" stroke="rgba(240,160,80,0.22)" stroke-width=".8"/>
+              <text x="190" y="236.5" font-family="Inter,sans-serif" font-size="5.5" font-weight="700"
+                fill="rgba(240,160,80,0.40)" letter-spacing=".12em" text-anchor="middle">CONSUL</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <!-- petal particle container -->
+      <div id="petalContainer"></div>
+
+      <!-- letter tag -->
+      <div class="letter-tag">
+        <div class="lt-col"><span class="lt">E</span><span class="lt-word">Extra</span></div>
+        <div class="lt-col"><span class="lt">S</span><span class="lt-word">Sense</span></div>
+        <div class="lt-col"><span class="lt">F</span><span class="lt-word">Feel</span></div>
+        <div class="lt-col"><span class="lt">J</span><span class="lt-word">Judge</span></div>
+      </div>
+
+      <!-- hover meaning overlay -->
+      <div class="card-meanings">
+        <div class="meaning-item"><div class="meaning-icon">🌍</div><div class="meaning-label">Extravert</div></div>
+        <div class="meaning-item"><div class="meaning-icon">👁️</div><div class="meaning-label">Sensing</div></div>
+        <div class="meaning-item"><div class="meaning-icon">💛</div><div class="meaning-label">Feeling</div></div>
+        <div class="meaning-item"><div class="meaning-icon">📋</div><div class="meaning-label">Judging</div></div>
+      </div>
+
+      <div class="card-vline"></div>
+      <div class="card-hline"></div>
+
+      <!-- card content -->
+      <div class="card-content">
+        <div class="card-name">
+          <div class="name-main">esfj<span class="name-dot">.</span>kr</div>
+          <div class="name-sub">the consul · the caregiver</div>
+        </div>
+        <div class="card-meta">
+          <div class="meta-row">E — Extravert</div>
+          <div class="meta-row">SF — Sensing &amp; Feeling</div>
+          <div class="meta-row">J — Judging</div>
+        </div>
+        <div class="card-right">
+          <div class="badge">
+            <span class="badge-glyph">🤝</span>
+            <span class="badge-label">ESFJ</span>
+          </div>
+          <div class="domain-url">esfj<span class="domain-tld">.kr</span></div>
+        </div>
+      </div>
+    </div><!-- /.card -->
+  </div><!-- /.card-wrap -->
+</div><!-- /.scene -->
+
+<script>
+// === tilt interaction ===
+const wrap = document.getElementById('cardWrap');
+const holo = document.getElementById('cardHolo');
+const spot = document.getElementById('cardSpot');
+let tX = 0, tY = 0, cX = 0, cY = 0, hovering = false;
+const lerp = (a, b, t) => a + (b - a) * t;
+
+(function loop() {
+  cX = lerp(cX, tX, 0.10);
+  cY = lerp(cY, tY, 0.10);
+  wrap.style.transform = hovering
+    ? `rotateX(${cX}deg) rotateY(${cY}deg) scale(1.04)`
+    : `rotateX(${cX}deg) rotateY(${cY}deg)`;
+  requestAnimationFrame(loop);
+})();
+
+wrap.addEventListener('mouseenter', () => {
+  hovering = true;
+  wrap.classList.remove('is-idle');
+  wrap.style.animation = 'none';
+});
+wrap.addEventListener('mouseleave', () => {
+  hovering = false;
+  tX = 0; tY = 0;
+  wrap.style.boxShadow = '';
+});
+wrap.addEventListener('mousemove', e => {
+  const r = wrap.getBoundingClientRect();
+  const nx = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+  const ny = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+  tY = nx * 14;
+  tX = -ny * 11;
+  const px = ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%';
+  const py = ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%';
+  const angle = (Math.atan2(ny, nx) * 180 / Math.PI + 90).toFixed(1) + 'deg';
+  holo.style.setProperty('--mx', px);
+  holo.style.setProperty('--my', py);
+  holo.style.setProperty('--r', angle);
+  spot.style.setProperty('--mx', px);
+  spot.style.setProperty('--my', py);
+  wrap.style.boxShadow = `0 45px 90px rgba(8,3,3,.80), 0 12px 28px rgba(8,3,3,.55), 0 0 40px rgba(220,130,70,.18)`;
+});
+
+// === petal particles ===
+const PETALS = [
+  {x:'8%',  w:6, h:4, color:'rgba(235,120,90,0.72)', dur:8.5, delay:0,   px:'14px', py:'-65px', pr:'160deg'},
+  {x:'18%', w:5, h:3, color:'rgba(255,180,100,0.65)', dur:9.2, delay:.8,  px:'-10px',py:'-72px', pr:'200deg'},
+  {x:'30%', w:7, h:4, color:'rgba(240,150,90,0.68)', dur:7.8, delay:1.5, px:'18px', py:'-58px', pr:'140deg'},
+  {x:'42%', w:5, h:3, color:'rgba(255,200,120,0.60)', dur:10.0,delay:2.2, px:'-14px',py:'-80px', pr:'220deg'},
+  {x:'55%', w:6, h:4, color:'rgba(230,120,85,0.70)', dur:8.8, delay:.5,  px:'12px', py:'-68px', pr:'175deg'},
+  {x:'65%', w:5, h:3, color:'rgba(255,185,110,0.62)', dur:9.5, delay:1.8, px:'-8px', py:'-75px', pr:'195deg'},
+  {x:'75%', w:7, h:5, color:'rgba(240,140,90,0.66)', dur:8.2, delay:3.0, px:'16px', py:'-62px', pr:'155deg'},
+  {x:'85%', w:5, h:3, color:'rgba(255,200,130,0.58)', dur:9.8, delay:1.2, px:'-12px',py:'-78px', pr:'210deg'},
+  {x:'22%', w:4, h:3, color:'rgba(235,130,95,0.55)', dur:11.0,delay:4.0, px:'10px', py:'-85px', pr:'180deg'},
+  {x:'60%', w:6, h:4, color:'rgba(255,170,100,0.60)', dur:10.5,delay:2.8, px:'-6px', py:'-70px', pr:'165deg'},
+  {x:'48%', w:4, h:3, color:'rgba(240,200,130,0.52)', dur:11.5,delay:5.0, px:'8px',  py:'-90px', pr:'230deg'},
+  {x:'90%', w:5, h:3, color:'rgba(230,110,80,0.65)', dur:8.0, delay:0.3, px:'-16px',py:'-60px', pr:'145deg'},
+];
+
+const petalContainer = document.getElementById('petalContainer');
+PETALS.forEach(p => {
+  const el = document.createElement('div');
+  el.className = 'petal';
+  el.style.cssText = `
+    left:${p.x};
+    bottom:${Math.floor(Math.random() * 30 + 5)}px;
+    width:${p.w}px;
+    height:${p.h}px;
+    background:${p.color};
+    --px:${p.px};
+    --py:${p.py};
+    --pr:${p.pr};
+    animation-duration:${p.dur}s;
+    animation-delay:${p.delay}s;
+    border-radius:50% 0 50% 0;
+  `;
+  petalContainer.appendChild(el);
+});
+</script>
+</body>
+</html>
